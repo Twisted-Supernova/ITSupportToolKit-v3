@@ -75,7 +75,7 @@ Analyze IP addresses and calculate subnet information:
 - Troubleshooting Flowcharts
 - And more...
 
-## Color Scheme
+## Color Schemes
 
 - Primary: #780000
 - Secondary: #C1121F
