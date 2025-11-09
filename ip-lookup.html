@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IP Lookup - IT Support Toolkit</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">IT Support Toolkit</div>
+            <button class="burger-menu" id="burgerMenu" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+        <div class="nav-menu" id="navMenu">
+            <a href="index.html">Home</a>
+            <a href="password-generator.html">Password Generator</a>
+            <a href="ip-lookup.html" class="active">IP Lookup</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="tool-header">
+            <h1>IP Lookup Tool</h1>
+            <p>Analyze IP addresses and subnets</p>
+        </div>
+
+        <div class="tool-content">
+            <div class="ip-input-section">
+                <label for="ipInput">Enter IP Address or CIDR Notation</label>
+                <div class="ip-input-group">
+                    <input 
+                        type="text" 
+                        id="ipInput" 
+                        placeholder="e.g., 192.168.1.100 or 192.168.1.0/24"
+                        autocomplete="off"
+                    >
+                    <button id="lookupButton" class="btn-primary">Lookup</button>
+                    <button id="clearButton" class="btn-secondary">Clear</button>
+                </div>
+            </div>
+
+            <div id="resultsSection" class="results-section" style="display: none;">
+                <div class="result-card" id="basicInfo">
+                    <h3>Basic Information</h3>
+                    <div class="result-grid" id="basicInfoContent"></div>
+                </div>
+
+                <div class="result-card" id="geolocationInfo" style="display: none;">
+                    <h3>Geolocation (Public IP Only)</h3>
+                    <div class="result-grid" id="geolocationInfoContent"></div>
+                </div>
+
+                <div class="result-card" id="subnetInfo" style="display: none;">
+                    <h3>Subnet Information</h3>
+                    <div class="result-grid" id="subnetInfoContent"></div>
+                </div>
+
+                <div class="result-card" id="binaryInfo" style="display: none;">
+                    <h3>Binary Representation</h3>
+                    <div class="result-grid" id="binaryInfoContent"></div>
+                </div>
+
+                <div class="result-card" id="additionalInfo" style="display: none;">
+                    <h3>Additional Details</h3>
+                    <div class="result-grid" id="additionalInfoContent"></div>
+                </div>
+            </div>
+
+            <div id="errorSection" class="error-section" style="display: none;">
+                <p id="errorMessage"></p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 IT Support Toolkit</p>
+    </footer>
+
+    <script src="ip-lookup-script.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
