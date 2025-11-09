@@ -741,6 +741,232 @@ footer {
     font-size: 1.1rem;
 }
 
+/* DNS Lookup and WHOIS Lookup Specific Styles */
+.dns-content,
+.whois-content {
+    max-width: 900px;
+}
+
+.dns-input-section,
+.whois-input-section {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dns-input-section label,
+.whois-input-section label {
+    display: block;
+    margin-bottom: 0.75rem;
+    font-weight: 500;
+    color: var(--color-dark);
+}
+
+.dns-input-section input,
+.dns-input-section select,
+.whois-input-group input {
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 1rem;
+    border: 2px solid var(--color-accent);
+    border-radius: 4px;
+    margin-bottom: 1rem;
+}
+
+.dns-input-section input:focus,
+.dns-input-section select:focus,
+.whois-input-group input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+}
+
+.dns-buttons,
+.whois-input-group {
+    display: flex;
+    gap: 1rem;
+}
+
+.dns-buttons button {
+    flex: 1;
+}
+
+.whois-hint {
+    margin-top: 0.75rem;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.dns-loading,
+.whois-loading {
+    text-align: center;
+    padding: 3rem;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.loading-spinner {
+    border: 4px solid var(--color-light);
+    border-top: 4px solid var(--color-primary);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 1rem;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.dns-results,
+.whois-results {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.dns-error,
+.whois-error {
+    background: #FEE2E2;
+    border: 1px solid #DC2626;
+    border-radius: 4px;
+    padding: 1rem;
+    color: #DC2626;
+    font-weight: 500;
+}
+
+.dns-records {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.dns-record-item {
+    background: var(--color-light);
+    padding: 1rem;
+    border-radius: 4px;
+    border-left: 4px solid var(--color-primary);
+}
+
+.dns-record-value {
+    margin-bottom: 0.5rem;
+}
+
+.dns-value {
+    font-family: 'Courier New', monospace;
+    font-size: 0.95rem;
+    background: white;
+    padding: 0.5rem;
+    border-radius: 4px;
+    display: inline-block;
+    word-break: break-all;
+}
+
+.dns-txt,
+.dns-soa {
+    display: block;
+    white-space: pre-wrap;
+}
+
+.dns-record-info {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.85rem;
+    color: #666;
+}
+
+.dns-priority,
+.dns-ttl {
+    padding: 0.25rem 0.5rem;
+    background: white;
+    border-radius: 4px;
+}
+
+.record-count {
+    background: var(--color-accent);
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.whois-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.whois-list-item {
+    padding: 0.75rem;
+    background: var(--color-light);
+    border-radius: 4px;
+}
+
+.privacy-notice {
+    padding: 1rem;
+    background: #FFF3CD;
+    border: 1px solid #FFC107;
+    border-radius: 4px;
+    color: #856404;
+    margin: 0;
+}
+
+.whois-command-box {
+    background: var(--color-dark);
+    color: var(--color-light);
+    padding: 1.5rem;
+    border-radius: 4px;
+    margin-top: 1rem;
+}
+
+.whois-command-box h4 {
+    margin: 0 0 0.75rem 0;
+    color: var(--color-light);
+}
+
+.command-line {
+    display: block;
+    font-family: 'Courier New', monospace;
+    font-size: 1rem;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 1rem;
+    border-radius: 4px;
+    margin-bottom: 0.75rem;
+}
+
+.command-hint {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--color-accent);
+}
+
+.whois-info-box {
+    background: #E3F2FD;
+    border: 1px solid var(--color-primary);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-top: 2rem;
+}
+
+.whois-info-box h3 {
+    color: var(--color-primary);
+    margin-top: 0;
+}
+
+.whois-info-box ul {
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+}
+
+.whois-info-box li {
+    margin-bottom: 0.5rem;
+}
+
 /* MAC Address Lookup Specific Styles */
 .mac-content {
     max-width: 900px;
@@ -1846,5 +2072,21 @@ footer {
 
     .copy-format-btn {
         width: 100%;
+    }
+
+    /* DNS and WHOIS responsive */
+    .dns-buttons,
+    .whois-input-group {
+        flex-direction: column;
+    }
+
+    .dns-buttons button,
+    .whois-input-group button {
+        width: 100%;
+    }
+
+    .dns-record-info {
+        flex-direction: column;
+        gap: 0.5rem;
     }
 }

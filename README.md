@@ -199,6 +199,51 @@ Identify vendor and format MAC addresses:
   - Validation and error messages
 - Perfect for network troubleshooting and device identification
 
+### DNS Lookup Tool
+Query DNS records using DNS-over-HTTPS:
+- **Supported record types:**
+  - A (IPv4 addresses)
+  - AAAA (IPv6 addresses)
+  - MX (Mail exchange servers with priority)
+  - TXT (Text records - SPF, DKIM, etc.)
+  - CNAME (Canonical names)
+  - NS (Name servers)
+  - SOA (Start of Authority)
+  - PTR (Reverse DNS)
+- **Features:**
+  - Lookup single record type
+  - "Lookup All" for comprehensive results
+  - Shows TTL (Time To Live) values
+  - MX priority display
+  - Uses Google DNS-over-HTTPS API
+  - Clean, organized results
+- **Use cases:**
+  - Troubleshoot email delivery (MX records)
+  - Verify DNS propagation
+  - Check domain configuration
+  - Audit DNS records
+
+### WHOIS Lookup Tool
+Get domain registration information:
+- **Domain information:**
+  - Registrar details
+  - Registration, update, and expiry dates
+  - Domain status
+  - Name servers
+  - Registrant information (if not redacted)
+- **Features:**
+  - Clean domain input (removes http://, www, etc.)
+  - Domain validation
+  - Privacy notice for GDPR-protected data
+  - Shows command-line alternative
+  - Informational content about WHOIS
+- **Use cases:**
+  - Check domain availability/expiry
+  - Verify domain ownership
+  - Identify registrar
+  - Audit domain configuration
+- **Note:** Uses WHOIS API (free tier) - personal data often redacted due to GDPR
+
 ## Files Structure
 
 ```
@@ -213,6 +258,8 @@ Identify vendor and format MAC addresses:
 ├── timestamp-converter.html       # Timestamp converter
 ├── encoder-decoder.html           # Base64 & URL encoder/decoder
 ├── mac-lookup.html                # MAC address lookup tool
+├── dns-lookup.html                # DNS lookup tool
+├── whois-lookup.html              # WHOIS lookup tool
 ├── styles.css                     # Shared styles
 ├── script.js                      # Burger menu functionality
 ├── password-script.js             # Password generator logic
@@ -225,6 +272,8 @@ Identify vendor and format MAC addresses:
 ├── timestamp-converter-script.js  # Timestamp converter logic
 ├── encoder-decoder-script.js      # Encoder/decoder logic
 ├── mac-lookup-script.js           # MAC lookup logic
+├── dns-lookup-script.js           # DNS lookup logic
+├── whois-lookup-script.js         # WHOIS lookup logic
 └── README.md                      # This file
 ```
 

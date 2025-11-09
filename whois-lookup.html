@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WHOIS Lookup - IT Support Toolkit</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">IT Support Toolkit</div>
+            <button class="burger-menu" id="burgerMenu" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+        <div class="nav-menu" id="navMenu">
+            <a href="index.html">Home</a>
+            
+            <div class="nav-dropdown">
+                <button class="nav-dropdown-btn">Generators ▾</button>
+                <div class="nav-dropdown-content">
+                    <a href="password-generator.html">Password Generator</a>
+                    <a href="username-generator.html">Username Generator</a>
+                </div>
+            </div>
+
+            <div class="nav-dropdown">
+                <button class="nav-dropdown-btn">Network Tools ▾</button>
+                <div class="nav-dropdown-content">
+                    <a href="ip-lookup.html">IP Lookup</a>
+                    <a href="port-reference.html">Port Reference</a>
+                    <a href="mac-lookup.html">MAC Lookup</a>
+                    <a href="dns-lookup.html">DNS Lookup</a>
+                    <a href="whois-lookup.html" class="active">WHOIS Lookup</a>
+                </div>
+            </div>
+
+            <div class="nav-dropdown">
+                <button class="nav-dropdown-btn">Data Tools ▾</button>
+                <div class="nav-dropdown-content">
+                    <a href="hash-generator.html">Hash Generator</a>
+                    <a href="json-formatter.html">JSON Formatter</a>
+                    <a href="encoder-decoder.html">Encoder/Decoder</a>
+                    <a href="timestamp-converter.html">Timestamp Converter</a>
+                </div>
+            </div>
+
+            <div class="nav-dropdown">
+                <button class="nav-dropdown-btn">System Tools ▾</button>
+                <div class="nav-dropdown-content">
+                    <a href="error-lookup.html">Error Lookup</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="tool-header">
+            <h1>WHOIS Lookup Tool</h1>
+            <p>Get domain registration and ownership information</p>
+        </div>
+
+        <div class="tool-content whois-content">
+            <div class="whois-input-section">
+                <label for="whoisQuery">Domain Name:</label>
+                <div class="whois-input-group">
+                    <input 
+                        type="text" 
+                        id="whoisQuery" 
+                        placeholder="e.g., google.com"
+                        autocomplete="off"
+                    >
+                    <button id="lookupWhoisBtn" class="btn-primary">Lookup</button>
+                    <button id="clearWhoisBtn" class="btn-secondary">Clear</button>
+                </div>
+                <p class="whois-hint">Enter a domain name without http:// or www</p>
+            </div>
+
+            <div id="whoisLoading" class="whois-loading" style="display: none;">
+                <div class="loading-spinner"></div>
+                <p>Querying WHOIS servers...</p>
+            </div>
+
+            <div id="whoisResults" class="whois-results" style="display: none;">
+                <!-- Results populated by JavaScript -->
+            </div>
+
+            <div id="whoisError" class="whois-error" style="display: none;"></div>
+
+            <div class="whois-info-box">
+                <h3>About WHOIS Lookups</h3>
+                <p>WHOIS is a query protocol used to look up information about domain registrations, including:</p>
+                <ul>
+                    <li>Domain registrar and registration dates</li>
+                    <li>Domain owner (may be redacted due to privacy)</li>
+                    <li>Name servers</li>
+                    <li>Domain status</li>
+                    <li>Expiration date</li>
+                </ul>
+                <p><strong>Note:</strong> Due to GDPR and privacy regulations, personal information is often redacted in WHOIS records.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 IT Support Toolkit</p>
+    </footer>
+
+    <script src="whois-lookup-script.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
