@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encoder/Decoder - IT Support Toolkit</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">IT Support Toolkit</div>
+            <button class="burger-menu" id="burgerMenu" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+        <div class="nav-menu" id="navMenu">
+            <a href="index.html">Home</a>
+            <a href="password-generator.html">Password Generator</a>
+            <a href="ip-lookup.html">IP Lookup</a>
+            <a href="port-reference.html">Port Reference</a>
+            <a href="hash-generator.html">Hash Generator</a>
+            <a href="error-lookup.html">Error Lookup</a>
+            <a href="username-generator.html">Username Generator</a>
+            <a href="json-formatter.html">JSON Formatter</a>
+            <a href="timestamp-converter.html">Timestamp Converter</a>
+            <a href="encoder-decoder.html" class="active">Encoder/Decoder</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="tool-header">
+            <h1>Base64 & URL Encoder/Decoder</h1>
+            <p>Encode and decode Base64 and URL strings</p>
+        </div>
+
+        <div class="tool-content encoder-content">
+            <!-- Base64 Encoder/Decoder -->
+            <div class="encoder-section">
+                <h3>Base64 Encoder/Decoder</h3>
+                <div class="encoder-controls">
+                    <button id="base64EncodeBtn" class="btn-primary">Encode</button>
+                    <button id="base64DecodeBtn" class="btn-secondary">Decode</button>
+                    <button id="copyBase64Btn" class="btn-secondary">Copy Output</button>
+                    <button id="clearBase64Btn" class="btn-secondary">Clear</button>
+                </div>
+                
+                <div class="editor-container">
+                    <div class="editor-column">
+                        <label>Input:</label>
+                        <textarea 
+                            id="base64Input" 
+                            placeholder="Enter text to encode or Base64 string to decode..."
+                            spellcheck="false"
+                        ></textarea>
+                    </div>
+                    
+                    <div class="editor-column">
+                        <label>Output:</label>
+                        <textarea 
+                            id="base64Output" 
+                            placeholder="Result will appear here..."
+                            readonly
+                            spellcheck="false"
+                        ></textarea>
+                    </div>
+                </div>
+                <div id="base64Status" class="encoder-status"></div>
+            </div>
+
+            <!-- URL Encoder/Decoder -->
+            <div class="encoder-section">
+                <h3>URL Encoder/Decoder</h3>
+                <div class="encoder-controls">
+                    <button id="urlEncodeBtn" class="btn-primary">Encode</button>
+                    <button id="urlDecodeBtn" class="btn-secondary">Decode</button>
+                    <button id="copyUrlBtn" class="btn-secondary">Copy Output</button>
+                    <button id="clearUrlBtn" class="btn-secondary">Clear</button>
+                </div>
+                
+                <div class="editor-container">
+                    <div class="editor-column">
+                        <label>Input:</label>
+                        <textarea 
+                            id="urlInput" 
+                            placeholder="Enter URL or text to encode/decode..."
+                            spellcheck="false"
+                        ></textarea>
+                    </div>
+                    
+                    <div class="editor-column">
+                        <label>Output:</label>
+                        <textarea 
+                            id="urlOutput" 
+                            placeholder="Result will appear here..."
+                            readonly
+                            spellcheck="false"
+                        ></textarea>
+                    </div>
+                </div>
+                <div id="urlStatus" class="encoder-status"></div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 IT Support Toolkit</p>
+    </footer>
+
+    <script src="encoder-decoder-script.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

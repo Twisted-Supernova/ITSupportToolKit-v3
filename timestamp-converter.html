@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timestamp Converter - IT Support Toolkit</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">IT Support Toolkit</div>
+            <button class="burger-menu" id="burgerMenu" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+        <div class="nav-menu" id="navMenu">
+            <a href="index.html">Home</a>
+            <a href="password-generator.html">Password Generator</a>
+            <a href="ip-lookup.html">IP Lookup</a>
+            <a href="port-reference.html">Port Reference</a>
+            <a href="hash-generator.html">Hash Generator</a>
+            <a href="error-lookup.html">Error Lookup</a>
+            <a href="username-generator.html">Username Generator</a>
+            <a href="json-formatter.html">JSON Formatter</a>
+            <a href="timestamp-converter.html" class="active">Timestamp Converter</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="tool-header">
+            <h1>Timestamp Converter</h1>
+            <p>Convert between Unix timestamps and human-readable dates</p>
+        </div>
+
+        <div class="tool-content timestamp-content">
+            <!-- Current Time Display -->
+            <div class="current-time-section">
+                <h3>Current Time</h3>
+                <div class="current-time-display">
+                    <div class="time-item">
+                        <span class="time-label">Unix Timestamp:</span>
+                        <code id="currentUnix">-</code>
+                    </div>
+                    <div class="time-item">
+                        <span class="time-label">Date & Time:</span>
+                        <code id="currentDateTime">-</code>
+                    </div>
+                    <div class="time-item">
+                        <span class="time-label">ISO 8601:</span>
+                        <code id="currentISO">-</code>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Unix to Human -->
+            <div class="converter-section">
+                <h3>Unix Timestamp to Human Readable</h3>
+                <div class="converter-input-group">
+                    <input 
+                        type="text" 
+                        id="unixInput" 
+                        placeholder="Enter Unix timestamp (e.g., 1699545600)"
+                        autocomplete="off"
+                    >
+                    <button id="convertUnixBtn" class="btn-primary">Convert</button>
+                </div>
+                <div id="unixResult" class="conversion-result"></div>
+            </div>
+
+            <!-- Human to Unix -->
+            <div class="converter-section">
+                <h3>Human Readable to Unix Timestamp</h3>
+                <div class="datetime-input-group">
+                    <input 
+                        type="datetime-local" 
+                        id="dateTimeInput"
+                    >
+                    <button id="convertDateBtn" class="btn-primary">Convert</button>
+                </div>
+                <div id="dateResult" class="conversion-result"></div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="quick-actions">
+                <h3>Quick Actions</h3>
+                <button id="nowTimestamp" class="btn-secondary">Current Timestamp</button>
+                <button id="todayMidnight" class="btn-secondary">Today at Midnight</button>
+                <button id="tomorrowMidnight" class="btn-secondary">Tomorrow at Midnight</button>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 IT Support Toolkit</p>
+    </footer>
+
+    <script src="timestamp-converter-script.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

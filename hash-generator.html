@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hash Generator - IT Support Toolkit</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">IT Support Toolkit</div>
+            <button class="burger-menu" id="burgerMenu" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+        <div class="nav-menu" id="navMenu">
+            <a href="index.html">Home</a>
+            <a href="password-generator.html">Password Generator</a>
+            <a href="ip-lookup.html">IP Lookup</a>
+            <a href="port-reference.html">Port Reference</a>
+            <a href="hash-generator.html" class="active">Hash Generator</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="tool-header">
+            <h1>Hash Generator</h1>
+            <p>Generate cryptographic hashes for text or files</p>
+        </div>
+
+        <div class="tool-content">
+            <div class="input-method-selector">
+                <button id="textModeBtn" class="mode-btn active">Text Input</button>
+                <button id="fileModeBtn" class="mode-btn">File Upload</button>
+            </div>
+
+            <!-- Text Input Mode -->
+            <div id="textInputMode" class="input-mode">
+                <div class="input-section">
+                    <label for="textInput">Enter Text to Hash:</label>
+                    <textarea 
+                        id="textInput" 
+                        rows="6" 
+                        placeholder="Type or paste text here..."
+                    ></textarea>
+                </div>
+                <button id="generateTextHashBtn" class="btn-primary">Generate Hashes</button>
+            </div>
+
+            <!-- File Input Mode -->
+            <div id="fileInputMode" class="input-mode" style="display: none;">
+                <div class="file-upload-section">
+                    <label for="fileInput" class="file-upload-label">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="17 8 12 3 7 8"></polyline>
+                            <line x1="12" y1="3" x2="12" y2="15"></line>
+                        </svg>
+                        <span>Click to select file or drag and drop</span>
+                        <span class="file-info">Maximum file size: 100MB</span>
+                    </label>
+                    <input type="file" id="fileInput" accept="*/*" style="display: none;">
+                </div>
+                <div id="selectedFileInfo" class="selected-file-info" style="display: none;">
+                    <p><strong>Selected file:</strong> <span id="fileName"></span></p>
+                    <p><strong>Size:</strong> <span id="fileSize"></span></p>
+                    <button id="removeFileBtn" class="btn-secondary">Remove File</button>
+                </div>
+                <button id="generateFileHashBtn" class="btn-primary" style="display: none;">Generate Hashes</button>
+            </div>
+
+            <!-- Hash Results -->
+            <div id="hashResults" class="hash-results" style="display: none;">
+                <h3>Hash Results</h3>
+                
+                <div class="hash-result-item">
+                    <div class="hash-header">
+                        <span class="hash-algorithm">MD5</span>
+                        <span class="hash-length">(128-bit)</span>
+                        <button class="copy-hash-btn" data-hash="md5">Copy</button>
+                    </div>
+                    <div class="hash-value" id="md5Hash">-</div>
+                </div>
+
+                <div class="hash-result-item">
+                    <div class="hash-header">
+                        <span class="hash-algorithm">SHA-1</span>
+                        <span class="hash-length">(160-bit)</span>
+                        <button class="copy-hash-btn" data-hash="sha1">Copy</button>
+                    </div>
+                    <div class="hash-value" id="sha1Hash">-</div>
+                </div>
+
+                <div class="hash-result-item">
+                    <div class="hash-header">
+                        <span class="hash-algorithm">SHA-256</span>
+                        <span class="hash-length">(256-bit)</span>
+                        <button class="copy-hash-btn" data-hash="sha256">Copy</button>
+                    </div>
+                    <div class="hash-value" id="sha256Hash">-</div>
+                </div>
+
+                <div class="hash-result-item">
+                    <div class="hash-header">
+                        <span class="hash-algorithm">SHA-384</span>
+                        <span class="hash-length">(384-bit)</span>
+                        <button class="copy-hash-btn" data-hash="sha384">Copy</button>
+                    </div>
+                    <div class="hash-value" id="sha384Hash">-</div>
+                </div>
+
+                <div class="hash-result-item">
+                    <div class="hash-header">
+                        <span class="hash-algorithm">SHA-512</span>
+                        <span class="hash-length">(512-bit)</span>
+                        <button class="copy-hash-btn" data-hash="sha512">Copy</button>
+                    </div>
+                    <div class="hash-value" id="sha512Hash">-</div>
+                </div>
+            </div>
+
+            <div id="processingMessage" class="processing-message" style="display: none;">
+                <p>Processing large file, please wait...</p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 IT Support Toolkit</p>
+    </footer>
+
+    <script src="hash-generator-script.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

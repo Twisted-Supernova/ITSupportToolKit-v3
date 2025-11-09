@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Port Reference - IT Support Toolkit</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">IT Support Toolkit</div>
+            <button class="burger-menu" id="burgerMenu" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+        <div class="nav-menu" id="navMenu">
+            <a href="index.html">Home</a>
+            <a href="password-generator.html">Password Generator</a>
+            <a href="ip-lookup.html">IP Lookup</a>
+            <a href="port-reference.html" class="active">Port Reference</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="tool-header">
+            <h1>Port Reference Guide</h1>
+            <p>Quick lookup for common network ports and services</p>
+        </div>
+
+        <div class="tool-content port-reference-content">
+            <div class="search-section">
+                <div class="search-group">
+                    <input 
+                        type="text" 
+                        id="searchInput" 
+                        placeholder="Search by port number, service name, or description..."
+                        autocomplete="off"
+                    >
+                    <button id="clearSearchButton" class="btn-secondary">Clear</button>
+                </div>
+
+                <div class="filter-group">
+                    <label class="filter-label">Protocol:</label>
+                    <select id="protocolFilter" class="filter-select">
+                        <option value="all">All Protocols</option>
+                        <option value="tcp">TCP</option>
+                        <option value="udp">UDP</option>
+                        <option value="both">Both TCP/UDP</option>
+                    </select>
+                </div>
+
+                <div class="results-info">
+                    <span id="resultsCount">Showing all ports</span>
+                </div>
+            </div>
+
+            <div class="ports-container">
+                <table class="ports-table" id="portsTable">
+                    <thead>
+                        <tr>
+                            <th>Port</th>
+                            <th>Service</th>
+                            <th>Protocol</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody id="portsTableBody">
+                        <!-- Populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="noResults" class="no-results" style="display: none;">
+                <p>No ports found matching your search criteria.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 IT Support Toolkit</p>
+    </footer>
+
+    <script src="port-reference-script.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

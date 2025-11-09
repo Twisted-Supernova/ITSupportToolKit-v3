@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAC Address Lookup - IT Support Toolkit</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">IT Support Toolkit</div>
+            <button class="burger-menu" id="burgerMenu" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+        <div class="nav-menu" id="navMenu">
+            <a href="index.html">Home</a>
+            <a href="password-generator.html">Password Generator</a>
+            <a href="ip-lookup.html">IP Lookup</a>
+            <a href="port-reference.html">Port Reference</a>
+            <a href="hash-generator.html">Hash Generator</a>
+            <a href="error-lookup.html">Error Lookup</a>
+            <a href="username-generator.html">Username Generator</a>
+            <a href="json-formatter.html">JSON Formatter</a>
+            <a href="timestamp-converter.html">Timestamp Converter</a>
+            <a href="encoder-decoder.html">Encoder/Decoder</a>
+            <a href="mac-lookup.html" class="active">MAC Lookup</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="tool-header">
+            <h1>MAC Address Lookup</h1>
+            <p>Identify vendor and format MAC addresses</p>
+        </div>
+
+        <div class="tool-content mac-content">
+            <div class="mac-input-section">
+                <label for="macInput">Enter MAC Address:</label>
+                <div class="mac-input-group">
+                    <input 
+                        type="text" 
+                        id="macInput" 
+                        placeholder="e.g., AA:BB:CC:DD:EE:FF or AA-BB-CC-DD-EE-FF"
+                        autocomplete="off"
+                    >
+                    <button id="lookupMacBtn" class="btn-primary">Lookup</button>
+                    <button id="clearMacBtn" class="btn-secondary">Clear</button>
+                </div>
+                <p class="format-hint">Accepts formats: AA:BB:CC:DD:EE:FF, AA-BB-CC-DD-EE-FF, AABBCCDDEEFF</p>
+            </div>
+
+            <div id="macResults" class="mac-results" style="display: none;">
+                <!-- Vendor Information -->
+                <div class="result-card">
+                    <h3>Vendor Information</h3>
+                    <div class="result-grid" id="vendorInfo"></div>
+                </div>
+
+                <!-- MAC Address Formats -->
+                <div class="result-card">
+                    <h3>MAC Address Formats</h3>
+                    <div class="format-list" id="macFormats"></div>
+                </div>
+
+                <!-- Technical Details -->
+                <div class="result-card">
+                    <h3>Technical Details</h3>
+                    <div class="result-grid" id="technicalDetails"></div>
+                </div>
+            </div>
+
+            <div id="macError" class="mac-error" style="display: none;"></div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 IT Support Toolkit</p>
+    </footer>
+
+    <script src="mac-lookup-script.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

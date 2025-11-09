@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Formatter - IT Support Toolkit</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">IT Support Toolkit</div>
+            <button class="burger-menu" id="burgerMenu" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+        <div class="nav-menu" id="navMenu">
+            <a href="index.html">Home</a>
+            <a href="password-generator.html">Password Generator</a>
+            <a href="ip-lookup.html">IP Lookup</a>
+            <a href="port-reference.html">Port Reference</a>
+            <a href="hash-generator.html">Hash Generator</a>
+            <a href="error-lookup.html">Error Lookup</a>
+            <a href="username-generator.html">Username Generator</a>
+            <a href="json-formatter.html" class="active">JSON Formatter</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="tool-header">
+            <h1>JSON Formatter & Validator</h1>
+            <p>Format, validate, and minify JSON data</p>
+        </div>
+
+        <div class="tool-content json-content">
+            <div class="json-controls">
+                <button id="formatJsonBtn" class="btn-primary">Format JSON</button>
+                <button id="minifyJsonBtn" class="btn-secondary">Minify JSON</button>
+                <button id="validateJsonBtn" class="btn-secondary">Validate Only</button>
+                <button id="copyJsonBtn" class="btn-secondary">Copy Output</button>
+                <button id="clearJsonBtn" class="btn-secondary">Clear</button>
+            </div>
+
+            <div class="json-editor-container">
+                <div class="editor-section">
+                    <h3>Input JSON:</h3>
+                    <textarea 
+                        id="jsonInput" 
+                        placeholder='Paste your JSON here, e.g., {"name":"John","age":30}'
+                        spellcheck="false"
+                    ></textarea>
+                </div>
+
+                <div class="editor-section">
+                    <h3>Output:</h3>
+                    <div id="jsonStatus" class="json-status"></div>
+                    <textarea 
+                        id="jsonOutput" 
+                        placeholder="Formatted JSON will appear here..."
+                        readonly
+                        spellcheck="false"
+                    ></textarea>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 IT Support Toolkit</p>
+    </footer>
+
+    <script src="json-formatter-script.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

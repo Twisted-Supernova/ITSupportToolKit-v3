@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AD Username Generator - IT Support Toolkit</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">IT Support Toolkit</div>
+            <button class="burger-menu" id="burgerMenu" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+        <div class="nav-menu" id="navMenu">
+            <a href="index.html">Home</a>
+            <a href="password-generator.html">Password Generator</a>
+            <a href="ip-lookup.html">IP Lookup</a>
+            <a href="port-reference.html">Port Reference</a>
+            <a href="hash-generator.html">Hash Generator</a>
+            <a href="error-lookup.html">Error Lookup</a>
+            <a href="username-generator.html" class="active">Username Generator</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="tool-header">
+            <h1>AD Username Generator</h1>
+            <p>Generate Active Directory usernames following common naming conventions</p>
+        </div>
+
+        <div class="tool-content username-content">
+            <div class="input-section">
+                <div class="form-group">
+                    <label for="firstName">First Name: <span class="required">*</span></label>
+                    <input type="text" id="firstName" placeholder="John" autocomplete="off">
+                </div>
+
+                <div class="form-group">
+                    <label for="lastName">Last Name: <span class="required">*</span></label>
+                    <input type="text" id="lastName" placeholder="Smith" autocomplete="off">
+                </div>
+
+                <div class="form-group">
+                    <label for="middleName">Middle Name: <span class="optional">(Optional)</span></label>
+                    <input type="text" id="middleName" placeholder="Michael" autocomplete="off">
+                </div>
+
+                <div class="form-group">
+                    <label for="employeeId">Employee ID: <span class="optional">(Optional)</span></label>
+                    <input type="text" id="employeeId" placeholder="12345" autocomplete="off">
+                </div>
+
+                <div class="form-group">
+                    <label for="suffixNumber">Add Suffix Number: <span class="optional">(For duplicates)</span></label>
+                    <input type="number" id="suffixNumber" placeholder="2" min="0" max="99" autocomplete="off">
+                </div>
+
+                <button id="generateUsernames" class="btn-primary">Generate Usernames</button>
+                <button id="clearForm" class="btn-secondary">Clear</button>
+            </div>
+
+            <div id="usernameResults" class="username-results" style="display: none;">
+                <h3>Generated Usernames</h3>
+                <p class="ad-limit-note">
+                    <strong>Note:</strong> Active Directory username limit is 20 characters. 
+                    Usernames exceeding this limit are highlighted.
+                </p>
+
+                <div class="username-grid" id="usernameGrid">
+                    <!-- Populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 IT Support Toolkit</p>
+    </footer>
+
+    <script src="username-generator-script.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

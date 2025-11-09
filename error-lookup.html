@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Windows Error Lookup - IT Support Toolkit</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">IT Support Toolkit</div>
+            <button class="burger-menu" id="burgerMenu" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+        <div class="nav-menu" id="navMenu">
+            <a href="index.html">Home</a>
+            <a href="password-generator.html">Password Generator</a>
+            <a href="ip-lookup.html">IP Lookup</a>
+            <a href="port-reference.html">Port Reference</a>
+            <a href="hash-generator.html">Hash Generator</a>
+            <a href="error-lookup.html" class="active">Error Lookup</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="tool-header">
+            <h1>Windows Error Code Lookup</h1>
+            <p>Find explanations and fixes for Windows error codes</p>
+        </div>
+
+        <div class="tool-content error-lookup-content">
+            <div class="search-section">
+                <div class="search-group">
+                    <input 
+                        type="text" 
+                        id="errorSearchInput" 
+                        placeholder="Search by error code (0x80070005) or description..."
+                        autocomplete="off"
+                    >
+                    <button id="clearErrorSearchBtn" class="btn-secondary">Clear</button>
+                </div>
+
+                <div class="filter-group">
+                    <label class="filter-label">Category:</label>
+                    <select id="categoryFilter" class="filter-select">
+                        <option value="all">All Categories</option>
+                        <option value="general">General Windows</option>
+                        <option value="update">Windows Update</option>
+                        <option value="network">Network</option>
+                        <option value="security">Security</option>
+                        <option value="activedirectory">Active Directory</option>
+                        <option value="groupolicy">Group Policy</option>
+                    </select>
+                </div>
+
+                <div class="results-info">
+                    <span id="errorResultsCount">Showing all errors</span>
+                </div>
+            </div>
+
+            <div id="errorResultsContainer" class="error-results-container">
+                <!-- Populated by JavaScript -->
+            </div>
+
+            <div id="noErrorResults" class="no-results" style="display: none;">
+                <p>No error codes found matching your search criteria.</p>
+                <p class="hint">Try searching with just the hex code (e.g., 0x80070005) or decimal value</p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 IT Support Toolkit</p>
+    </footer>
+
+    <script src="error-lookup-script.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
