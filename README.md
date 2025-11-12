@@ -244,6 +244,80 @@ Get domain registration information:
   - Audit domain configuration
 - **Note:** Uses WHOIS API (free tier) - personal data often redacted due to GDPR
 
+### NTFS Permission Builder
+Generate Windows icacls commands for file/folder permissions:
+- **Permission configuration:**
+  - Grant, Deny, or Remove permissions
+  - Full Control, Modify, Read & Execute, Read, Write
+  - Inheritance options (folders, subfolders, files)
+  - Recursive application
+- **Advanced options:**
+  - Reset inheritance
+  - Protect from inheritance
+  - Multiple inheritance patterns
+- **Generated command features:**
+  - Properly formatted icacls syntax
+  - Handles paths with spaces
+  - One-click copy
+  - Usage instructions included
+- **Reference section:**
+  - Common icacls commands
+  - Backup/restore permissions
+  - Change ownership
+- Perfect for setting up shared folders and troubleshooting access issues
+
+### Firewall Rule Builder
+Generate firewall commands for Windows (netsh) and Linux (ufw):
+- **Dual OS support:**
+  - Windows: netsh advfirewall commands
+  - Linux: ufw commands
+  - Tab switching between OS types
+- **Rule configuration:**
+  - Allow or Block actions
+  - Inbound or Outbound direction
+  - Protocols: TCP, UDP, ICMP, Any
+  - Port ranges (single, multiple, ranges)
+  - Remote IP filtering (single IP or CIDR)
+- **Windows-specific:**
+  - Profile selection (Domain/Private/Public/Any)
+  - Enable/disable rule
+- **Generated commands:**
+  - Properly formatted syntax
+  - One-click copy
+  - Platform-specific instructions
+- **Reference section:**
+  - Common firewall commands
+  - List/delete rules
+  - Enable/disable firewall
+- Essential for network security configuration
+
+### AD Group Membership Simulator
+Simulate Active Directory nested group memberships and calculate effective permissions:
+- **User and group management:**
+  - Add users
+  - Add groups
+  - Add users to groups
+  - Add nested groups (groups within groups)
+- **Nested group logic:**
+  - Circular reference detection (prevents invalid configurations)
+  - Recursive membership calculation
+  - Tracks direct and indirect memberships
+- **Effective membership calculation:**
+  - Shows all groups a user belongs to (direct and indirect)
+  - Membership path visualization (User → Group A → Group B)
+  - Direct vs indirect membership indicators
+- **Visual displays:**
+  - Current configuration view (all users and groups)
+  - Effective membership summary
+  - Membership tree (hierarchical visualization)
+- **Use cases:**
+  - Understanding AD permission inheritance
+  - Troubleshooting "why does user X have access to Y?"
+  - Planning group structure before implementation
+  - Auditing effective permissions
+  - Training/documentation
+- Perfect for visualizing complex group hierarchies
+
 ## Files Structure
 
 ```
@@ -260,6 +334,9 @@ Get domain registration information:
 ├── mac-lookup.html                # MAC address lookup tool
 ├── dns-lookup.html                # DNS lookup tool
 ├── whois-lookup.html              # WHOIS lookup tool
+├── ntfs-permissions.html          # NTFS permission builder
+├── firewall-builder.html          # Firewall rule builder
+├── ad-group-simulator.html        # AD group membership simulator
 ├── styles.css                     # Shared styles
 ├── script.js                      # Burger menu functionality
 ├── password-script.js             # Password generator logic
@@ -274,6 +351,9 @@ Get domain registration information:
 ├── mac-lookup-script.js           # MAC lookup logic
 ├── dns-lookup-script.js           # DNS lookup logic
 ├── whois-lookup-script.js         # WHOIS lookup logic
+├── ntfs-permissions-script.js     # NTFS permission builder logic
+├── firewall-builder-script.js     # Firewall rule builder logic
+├── ad-group-simulator-script.js   # AD group simulator logic
 └── README.md                      # This file
 ```
 

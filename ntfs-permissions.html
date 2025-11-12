@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NTFS Permission Builder - IT Support Toolkit</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">IT Support Toolkit</div>
+            <button class="burger-menu" id="burgerMenu" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+        <div class="nav-menu" id="navMenu">
+            <a href="index.html">Home</a>
+            
+            <div class="nav-dropdown">
+                <button class="nav-dropdown-btn">Generators ▾</button>
+                <div class="nav-dropdown-content">
+                    <a href="password-generator.html">Password Generator</a>
+                    <a href="username-generator.html">Username Generator</a>
+                </div>
+            </div>
+
+            <div class="nav-dropdown">
+                <button class="nav-dropdown-btn">Network Tools ▾</button>
+                <div class="nav-dropdown-content">
+                    <a href="ip-lookup.html">IP Lookup</a>
+                    <a href="port-reference.html">Port Reference</a>
+                    <a href="mac-lookup.html">MAC Lookup</a>
+                    <a href="dns-lookup.html">DNS Lookup</a>
+                    <a href="whois-lookup.html">WHOIS Lookup</a>
+                </div>
+            </div>
+
+            <div class="nav-dropdown">
+                <button class="nav-dropdown-btn">Data Tools ▾</button>
+                <div class="nav-dropdown-content">
+                    <a href="hash-generator.html">Hash Generator</a>
+                    <a href="json-formatter.html">JSON Formatter</a>
+                    <a href="encoder-decoder.html">Encoder/Decoder</a>
+                    <a href="timestamp-converter.html">Timestamp Converter</a>
+                </div>
+            </div>
+
+            <div class="nav-dropdown">
+                <button class="nav-dropdown-btn">System Tools ▾</button>
+                <div class="nav-dropdown-content">
+                    <a href="error-lookup.html">Error Lookup</a>
+                    <a href="ntfs-permissions.html" class="active">NTFS Permissions</a>
+                    <a href="firewall-builder.html">Firewall Builder</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="tool-header">
+            <h1>NTFS Permission Builder</h1>
+            <p>Generate icacls commands for Windows file/folder permissions</p>
+        </div>
+
+        <div class="tool-content ntfs-content">
+            <div class="builder-section">
+                <h3>Permission Configuration</h3>
+                
+                <div class="form-group">
+                    <label for="targetPath">File or Folder Path: <span class="required">*</span></label>
+                    <input 
+                        type="text" 
+                        id="targetPath" 
+                        placeholder='e.g., C:\Shared\Documents or "C:\My Folder"'
+                        autocomplete="off"
+                    >
+                    <span class="field-hint">Use quotes for paths with spaces</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="userGroup">User or Group: <span class="required">*</span></label>
+                    <input 
+                        type="text" 
+                        id="userGroup" 
+                        placeholder="e.g., DOMAIN\Username or BUILTIN\Users"
+                        autocomplete="off"
+                    >
+                    <span class="field-hint">Format: DOMAIN\User or COMPUTER\User</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="permissionType">Permission Type:</label>
+                    <select id="permissionType">
+                        <option value="basic">Basic Permissions</option>
+                        <option value="advanced">Advanced Permissions</option>
+                    </select>
+                </div>
+
+                <div id="basicPermissions" class="permission-options">
+                    <label>Basic Permissions:</label>
+                    <div class="checkbox-grid">
+                        <label class="checkbox-label">
+                            <input type="radio" name="basicPerm" value="F" checked>
+                            <span>Full Control</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="radio" name="basicPerm" value="M">
+                            <span>Modify</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="radio" name="basicPerm" value="RX">
+                            <span>Read & Execute</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="radio" name="basicPerm" value="R">
+                            <span>Read</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="radio" name="basicPerm" value="W">
+                            <span>Write</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div id="advancedPermissions" class="permission-options" style="display: none;">
+                    <label>Advanced Permissions (select multiple):</label>
+                    <div class="checkbox-grid">
+                        <label class="checkbox-label">
+                            <input type="checkbox" value="F" class="adv-perm">
+                            <span>Full Control (F)</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" value="D" class="adv-perm">
+                            <span>Delete (D)</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" value="RC" class="adv-perm">
+                            <span>Read Control (RC)</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" value="WDAC" class="adv-perm">
+                            <span>Write DAC (WDAC)</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" value="WO" class="adv-perm">
+                            <span>Write Owner (WO)</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" value="S" class="adv-perm">
+                            <span>Synchronize (S)</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" value="RD" class="adv-perm">
+                            <span>Read Data (RD)</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" value="WD" class="adv-perm">
+                            <span>Write Data (WD)</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" value="AD" class="adv-perm">
+                            <span>Append Data (AD)</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" value="REA" class="adv-perm">
+                            <span>Read Attributes (REA)</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" value="WEA" class="adv-perm">
+                            <span>Write Attributes (WEA)</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" value="X" class="adv-perm">
+                            <span>Execute (X)</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" value="DC" class="adv-perm">
+                            <span>Delete Child (DC)</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="actionType">Action:</label>
+                    <select id="actionType">
+                        <option value="/grant">Grant - Add permissions</option>
+                        <option value="/grant:r">Grant & Replace - Replace all permissions</option>
+                        <option value="/deny">Deny - Explicitly deny</option>
+                        <option value="/remove">Remove - Remove user/group</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="inheritanceFlag">
+                        Apply to subfolders and files (inheritance)
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <label for="inheritanceType">Inheritance Type:</label>
+                    <select id="inheritanceType">
+                        <option value="OI,CI">(OI)(CI) - This folder, subfolders and files</option>
+                        <option value="OI">(OI) - This folder and files only</option>
+                        <option value="CI">(CI) - This folder and subfolders only</option>
+                        <option value="IO,OI,CI">(IO)(OI)(CI) - Subfolders and files only</option>
+                        <option value="IO,CI">(IO)(CI) - Subfolders only</option>
+                        <option value="IO,OI">(IO)(OI) - Files only</option>
+                    </select>
+                </div>
+
+                <button id="generateCommand" class="btn-primary">Generate Command</button>
+                <button id="clearNtfsForm" class="btn-secondary">Clear</button>
+            </div>
+
+            <div id="commandOutput" class="command-output" style="display: none;">
+                <h3>Generated Command</h3>
+                <div class="command-box">
+                    <code id="generatedCommand"></code>
+                    <button id="copyCommand" class="copy-command-btn">Copy Command</button>
+                </div>
+                
+                <div class="command-explanation">
+                    <h4>Command Explanation:</h4>
+                    <div id="commandExplanation"></div>
+                </div>
+
+                <div class="usage-instructions">
+                    <h4>How to Use:</h4>
+                    <ol>
+                        <li>Open Command Prompt or PowerShell <strong>as Administrator</strong></li>
+                        <li>Copy and paste the generated command</li>
+                        <li>Press Enter to apply the permissions</li>
+                        <li>Verify with: <code>icacls "path" /t</code></li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 IT Support Toolkit</p>
+    </footer>
+
+    <script src="ntfs-permissions-script.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

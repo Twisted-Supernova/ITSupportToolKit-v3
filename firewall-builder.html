@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firewall Rule Builder - IT Support Toolkit</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">IT Support Toolkit</div>
+            <button class="burger-menu" id="burgerMenu" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+        <div class="nav-menu" id="navMenu">
+            <a href="index.html">Home</a>
+            
+            <div class="nav-dropdown">
+                <button class="nav-dropdown-btn">Generators ▾</button>
+                <div class="nav-dropdown-content">
+                    <a href="password-generator.html">Password Generator</a>
+                    <a href="username-generator.html">Username Generator</a>
+                </div>
+            </div>
+
+            <div class="nav-dropdown">
+                <button class="nav-dropdown-btn">Network Tools ▾</button>
+                <div class="nav-dropdown-content">
+                    <a href="ip-lookup.html">IP Lookup</a>
+                    <a href="port-reference.html">Port Reference</a>
+                    <a href="mac-lookup.html">MAC Lookup</a>
+                    <a href="dns-lookup.html">DNS Lookup</a>
+                    <a href="whois-lookup.html">WHOIS Lookup</a>
+                </div>
+            </div>
+
+            <div class="nav-dropdown">
+                <button class="nav-dropdown-btn">Data Tools ▾</button>
+                <div class="nav-dropdown-content">
+                    <a href="hash-generator.html">Hash Generator</a>
+                    <a href="json-formatter.html">JSON Formatter</a>
+                    <a href="encoder-decoder.html">Encoder/Decoder</a>
+                    <a href="timestamp-converter.html">Timestamp Converter</a>
+                </div>
+            </div>
+
+            <div class="nav-dropdown">
+                <button class="nav-dropdown-btn">System Tools ▾</button>
+                <div class="nav-dropdown-content">
+                    <a href="error-lookup.html">Error Lookup</a>
+                    <a href="ntfs-permissions.html">NTFS Permissions</a>
+                    <a href="firewall-builder.html" class="active">Firewall Builder</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="tool-header">
+            <h1>Firewall Rule Builder</h1>
+            <p>Generate firewall commands for Windows (netsh) and Linux (ufw)</p>
+        </div>
+
+        <div class="tool-content firewall-content">
+            <div class="firewall-os-selector">
+                <label class="radio-label-inline">
+                    <input type="radio" name="osType" value="windows" checked>
+                    <span>Windows (netsh)</span>
+                </label>
+                <label class="radio-label-inline">
+                    <input type="radio" name="osType" value="linux">
+                    <span>Linux (ufw)</span>
+                </label>
+            </div>
+
+            <div class="builder-section">
+                <h3>Firewall Rule Configuration</h3>
+                
+                <div class="form-group">
+                    <label for="ruleName">Rule Name: <span class="required">*</span></label>
+                    <input 
+                        type="text" 
+                        id="ruleName" 
+                        placeholder='e.g., "Allow Web Server" or Allow-HTTP'
+                        autocomplete="off"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="ruleAction">Action:</label>
+                    <select id="ruleAction">
+                        <option value="allow">Allow</option>
+                        <option value="block">Block/Deny</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="ruleDirection">Direction:</label>
+                    <select id="ruleDirection">
+                        <option value="in">Inbound</option>
+                        <option value="out">Outbound</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="ruleProtocol">Protocol:</label>
+                    <select id="ruleProtocol">
+                        <option value="tcp">TCP</option>
+                        <option value="udp">UDP</option>
+                        <option value="any">Any</option>
+                        <option value="icmpv4">ICMPv4 (ping)</option>
+                    </select>
+                </div>
+
+                <div class="form-group" id="portGroup">
+                    <label for="rulePort">Port(s): <span class="optional">(Leave empty for all ports)</span></label>
+                    <input 
+                        type="text" 
+                        id="rulePort" 
+                        placeholder="e.g., 80, 443, 8080-8090"
+                        autocomplete="off"
+                    >
+                    <span class="field-hint">Single port: 80, Multiple: 80,443, Range: 8000-9000</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="remoteIP">Remote IP Address: <span class="optional">(Optional)</span></label>
+                    <input 
+                        type="text" 
+                        id="remoteIP" 
+                        placeholder="e.g., 192.168.1.100 or 192.168.1.0/24"
+                        autocomplete="off"
+                    >
+                    <span class="field-hint">Single IP, CIDR notation, or leave empty for any</span>
+                </div>
+
+                <div class="form-group" id="profileGroup">
+                    <label for="ruleProfile">Profile (Windows only):</label>
+                    <select id="ruleProfile">
+                        <option value="any">Any</option>
+                        <option value="domain">Domain</option>
+                        <option value="private">Private</option>
+                        <option value="public">Public</option>
+                    </select>
+                </div>
+
+                <div class="form-group" id="programGroup">
+                    <label for="programPath">Program Path: <span class="optional">(Optional, Windows only)</span></label>
+                    <input 
+                        type="text" 
+                        id="programPath" 
+                        placeholder='e.g., "C:\Program Files\MyApp\app.exe"'
+                        autocomplete="off"
+                    >
+                </div>
+
+                <button id="generateFirewallCommand" class="btn-primary">Generate Command</button>
+                <button id="clearFirewallForm" class="btn-secondary">Clear</button>
+            </div>
+
+            <div id="firewallCommandOutput" class="command-output" style="display: none;">
+                <h3>Generated Command</h3>
+                <div class="command-box">
+                    <code id="generatedFirewallCommand"></code>
+                    <button id="copyFirewallCommand" class="copy-command-btn">Copy Command</button>
+                </div>
+                
+                <div class="command-explanation">
+                    <h4>Command Explanation:</h4>
+                    <div id="firewallCommandExplanation"></div>
+                </div>
+
+                <div class="usage-instructions">
+                    <h4>How to Use:</h4>
+                    <div id="firewallUsageInstructions"></div>
+                </div>
+
+                <div id="additionalCommands" class="additional-commands">
+                    <h4>Additional Useful Commands:</h4>
+                    <div id="additionalCommandsList"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 IT Support Toolkit</p>
+    </footer>
+
+    <script src="firewall-builder-script.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
