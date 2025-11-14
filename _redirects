@@ -1,0 +1,13 @@
+# Netlify redirects file
+
+# Custom 404 page
+/*    /404.html   404
+
+# Redirect old tool names if any (add as needed)
+# /old-tool-name    /new-tool-name    301
+
+# Force HTTPS (optional - Netlify does this automatically with Force HTTPS setting)
+http://itsupporttoolkit.netlify.app/*    https://itsupporttoolkit.netlify.app/:splat    301!
+
+# SPA-like behavior - redirect all unknown paths to index (optional)
+# /*    /index.html   200
