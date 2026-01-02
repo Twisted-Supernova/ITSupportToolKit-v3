@@ -1,115 +1,3 @@
-// OUI Database - Common vendors (first 6 hex digits identify manufacturer)
-const ouiDatabase = {
-    '00:00:0C': 'Cisco Systems',
-    '00:00:5E': 'IANA (Internet Assigned Numbers Authority)',
-    '00:01:42': 'Cisco Systems',
-    '00:01:43': 'Cisco Systems',
-    '00:03:6B': 'Cisco Systems',
-    '00:05:73': 'Cisco Systems',
-    '00:0A:41': 'Cisco Systems',
-    '00:0A:B7': 'Cisco Systems',
-    '00:0C:29': 'VMware, Inc.',
-    '00:0D:3A': 'Microsoft Corporation',
-    '00:0F:1F': 'Dell Inc.',
-    '00:11:22': 'Ciena Corporation',
-    '00:12:79': 'Cisco-Linksys',
-    '00:13:72': 'Dell Inc.',
-    '00:14:22': 'Dell Inc.',
-    '00:15:5D': 'Microsoft Corporation',
-    '00:16:3E': 'Xensource, Inc.',
-    '00:17:A4': 'D-Link Corporation',
-    '00:19:5B': 'Hewlett Packard',
-    '00:1A:4D': 'Hewlett Packard',
-    '00:1A:A0': 'Dell Inc.',
-    '00:1B:21': 'Intel Corporate',
-    '00:1C:23': 'Cisco Systems',
-    '00:1D:09': 'Cisco-Linksys',
-    '00:1E:58': 'Apple, Inc.',
-    '00:1F:5B': 'Apple, Inc.',
-    '00:21:5C': 'Hewlett Packard',
-    '00:22:19': 'Cisco Systems',
-    '00:23:24': 'Apple, Inc.',
-    '00:24:D7': 'Intel Corporate',
-    '00:25:00': 'Apple, Inc.',
-    '00:25:90': 'Super Micro Computer',
-    '00:26:08': 'Apple, Inc.',
-    '00:50:56': 'VMware, Inc.',
-    '00:50:C2': 'IEEE 802.1 Committee',
-    '00:80:48': 'Compex',
-    '00:A0:C9': 'Intel Corporation',
-    '00:C0:9F': 'Quanta Computer Inc.',
-    '00:D0:2D': 'Intel Corporation',
-    '00:E0:4C': 'Realtek Semiconductor Corp.',
-    '08:00:27': 'PCS Systemtechnik GmbH (Oracle VirtualBox)',
-    '08:00:30': 'Royal Melbourne Inst of Tech',
-    '0C:9D:92': 'Hewlett Packard',
-    '10:00:5A': 'IBM Corp',
-    '10:62:E5': 'Hewlett Packard',
-    '14:10:9F': 'Hewlett Packard',
-    '18:03:73': 'Cisco Systems',
-    '18:A9:05': 'Hewlett Packard',
-    '1C:6F:65': 'Cisco Systems',
-    '20:4C:03': 'Hewlett Packard',
-    '28:92:4A': 'Hewlett Packard',
-    '2C:27:D7': 'Cisco Systems',
-    '30:B5:C2': 'Hewlett Packard',
-    '34:64:A9': 'Hewlett Packard',
-    '3C:D9:2B': 'Hewlett Packard',
-    '40:A8:F0': 'Hewlett Packard',
-    '44:1E:A1': 'Cisco Systems',
-    '48:DF:37': 'Hewlett Packard',
-    '4C:D9:8F': 'Hewlett Packard',
-    '50:46:5D': 'AzureWave Technology Inc.',
-    '54:75:D0': 'Cisco Systems',
-    '58:20:B1': 'Cisco Systems',
-    '5C:5E:AB': 'Cisco Systems',
-    '60:73:5C': 'Cisco Systems',
-    '64:00:6A': 'Cisco Systems',
-    '68:05:CA': 'Cisco Systems',
-    '6C:41:6A': 'Cisco Systems',
-    '70:CA:9B': 'Cisco Systems',
-    '74:A0:2F': 'Cisco Systems',
-    '78:2B:CB': 'Hewlett Packard',
-    '78:DA:6E': 'Dell Inc.',
-    '7C:0E:CE': 'Cisco Systems',
-    '80:1F:12': 'Cisco Systems',
-    '84:78:AC': 'Cisco Systems',
-    '88:53:2E': 'Cisco Systems',
-    '8C:60:4F': 'Cisco Systems',
-    '90:E2:BA': 'Hewlett Packard',
-    '94:57:A5': 'Cisco Systems',
-    '98:4B:E1': 'Cisco Systems',
-    '9C:37:F4': 'Cisco Systems',
-    'A0:36:BC': 'Apple, Inc.',
-    'A0:F8:49': 'Dell Inc.',
-    'A4:5E:60': 'Cisco Systems',
-    'A8:20:66': 'Cisco Systems',
-    'AC:4A:67': 'Cisco Systems',
-    'B0:7D:64': 'Cisco Systems',
-    'B4:A9:5A': 'Cisco Systems',
-    'B8:27:EB': 'Raspberry Pi Foundation',
-    'B8:BE:BF': 'Cisco Systems',
-    'BC:16:65': 'Cisco Systems',
-    'C0:62:6B': 'Cisco Systems',
-    'C4:71:54': 'Cisco Systems',
-    'C8:00:84': 'Cisco Systems',
-    'C8:4C:75': 'Cisco Systems',
-    'CC:D5:39': 'Cisco Systems',
-    'D0:57:4C': 'Cisco Systems',
-    'D4:A9:28': 'Cisco Systems',
-    'D8:24:BD': 'Cisco Systems',
-    'DC:7B:94': 'Cisco Systems',
-    'E0:2F:6D': 'Cisco Systems',
-    'E4:C7:22': 'Cisco Systems',
-    'E8:04:62': 'Hewlett Packard',
-    'E8:B7:48': 'Cisco Systems',
-    'EC:1D:8B': 'Cisco Systems',
-    'F0:29:29': 'Cisco Systems',
-    'F4:4E:05': 'Cisco Systems',
-    'F8:72:EA': 'Cisco Systems',
-    'FC:5B:39': 'Cisco Systems'
-};
-
 // DOM Elements
 const macInput = document.getElementById('macInput');
 const lookupMacBtn = document.getElementById('lookupMacBtn');
@@ -124,10 +12,20 @@ const technicalDetails = document.getElementById('technicalDetails');
 lookupMacBtn.addEventListener('click', lookupMAC);
 clearMacBtn.addEventListener('click', clearAll);
 macInput.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') lookupMAC();
+    if (e.key === 'Enter') {
+        lookupMAC();
+    }
 });
 
-// Main lookup function
+// Event delegation for dynamically created copy buttons
+document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('copy-format-btn')) {
+        const textToCopy = e.target.dataset.copyValue;
+        copyFormat(textToCopy, e.target);
+    }
+});
+
+// MAC address lookup
 function lookupMAC() {
     const input = macInput.value.trim();
     
@@ -136,98 +34,94 @@ function lookupMAC() {
         return;
     }
     
-    // Parse and validate MAC address
-    const mac = parseMAC(input);
+    // Clean and validate MAC address
+    const cleanMAC = input.replace(/[^a-fA-F0-9]/g, '');
     
-    if (!mac) {
-        showError('Invalid MAC address format. Please use AA:BB:CC:DD:EE:FF, AA-BB-CC-DD-EE-FF, or AABBCCDDEEFF');
+    if (cleanMAC.length !== 12) {
+        showError('Invalid MAC address. Must be 12 hexadecimal characters (e.g., 00:1A:2B:3C:4D:5E)');
         return;
     }
     
-    // Get OUI (first 3 bytes)
-    const oui = mac.substring(0, 8).toUpperCase();
+    hideError();
+    
+    // Format MAC address
+    const formattedMAC = cleanMAC.match(/.{2}/g).join(':').toUpperCase();
+    
+    // Get OUI (first 6 characters)
+    const oui = cleanMAC.substring(0, 6).toUpperCase();
     
     // Lookup vendor
     const vendor = lookupVendor(oui);
     
-    // Get technical details
-    const details = getMACDetails(mac);
+    // Analyze MAC address
+    const details = analyzeMAC(cleanMAC);
     
     // Display results
-    displayResults(mac, oui, vendor, details);
+    displayResults(formattedMAC, vendor, details);
 }
 
-// Parse MAC address from various formats
-function parseMAC(input) {
-    // Remove all separators and whitespace
-    let cleaned = input.replace(/[:\-\s\.]/g, '').toUpperCase();
-    
-    // Check if valid hex and correct length
-    if (!/^[0-9A-F]{12}$/.test(cleaned)) {
-        return null;
-    }
-    
-    // Format as colon-separated
-    return cleaned.match(/.{1,2}/g).join(':');
-}
-
-// Lookup vendor from OUI database
+// Lookup vendor from OUI
 function lookupVendor(oui) {
-    // Check exact match
-    if (ouiDatabase[oui]) {
-        return ouiDatabase[oui];
-    }
+    const vendors = {
+        '001A2B': 'Cisco Systems',
+        '00055D': 'D-Link Corporation',
+        '000C29': 'VMware, Inc.',
+        '001B63': 'Apple, Inc.',
+        '00259C': 'Hewlett Packard',
+        '0019E3': 'Netgear',
+        '001DD8': 'Microsoft Corporation',
+        '001FF3': 'Apple, Inc.',
+        '002566': 'Dell Inc.',
+        '5C5948': 'Cisco Systems',
+        'B4B686': 'Intel Corporate',
+        '001CB0': 'ASUS',
+        '00146C': 'Netgear',
+        '001E8C': 'ASUSTek COMPUTER INC.',
+        'F0EE10': 'Samsung Electronics',
+        '001E2A': 'The Linksys Group, Inc.',
+        '001AA0': 'Dell Inc.',
+        '001CF0': 'Intel Corporate',
+        '00226B': 'Dell Inc.',
+        '002438': 'Intel Corporate'
+    };
     
-    // Check if it's a locally administered address
-    const firstByte = parseInt(oui.substring(0, 2), 16);
-    if (firstByte & 0x02) {
-        return 'Locally Administered (No vendor assigned)';
-    }
-    
-    return 'Unknown Vendor (not in database)';
+    return vendors[oui] || 'Unknown Vendor';
 }
 
-// Get technical details about MAC address
-function getMACDetails(mac) {
-    const firstByte = parseInt(mac.substring(0, 2), 16);
+// Analyze MAC address
+function analyzeMAC(mac) {
+    const firstOctet = parseInt(mac.substring(0, 2), 16);
     
-    // Check multicast bit (bit 0 of first byte)
-    const isMulticast = (firstByte & 0x01) !== 0;
+    // Check if multicast (bit 0 of first octet)
+    const isMulticast = (firstOctet & 1) === 1;
     
-    // Check local/universal bit (bit 1 of first byte)
-    const isLocal = (firstByte & 0x02) !== 0;
+    // Check if locally administered (bit 1 of first octet)
+    const isLocallyAdministered = (firstOctet & 2) === 2;
     
-    // Check if likely randomized (common in privacy features)
-    const isRandomized = isLocal && mac !== '02:00:00:00:00:00';
+    // Check for randomized MAC (common in mobile devices for privacy)
+    const isRandomized = isLocallyAdministered;
+    
+    // Convert to binary
+    const binary = mac.split('').map(char => 
+        parseInt(char, 16).toString(2).padStart(4, '0')
+    ).join(' ');
     
     return {
         addressType: isMulticast ? 'Multicast' : 'Unicast',
-        administrationType: isLocal ? 'Locally Administered (LAA)' : 'Universally Administered (UAA)',
+        administrationType: isLocallyAdministered ? 'Locally Administered' : 'Globally Unique (IEEE)',
         isRandomized: isRandomized,
-        binary: macToBinary(mac)
+        binary: binary
     };
 }
 
-// Convert MAC to binary representation
-function macToBinary(mac) {
-    return mac.split(':')
-        .map(byte => parseInt(byte, 16).toString(2).padStart(8, '0'))
-        .join(' ');
-}
-
 // Display results
-function displayResults(mac, oui, vendor, details) {
-    hideError();
-    
+function displayResults(mac, vendor, details) {
     // Vendor Information
     vendorInfo.innerHTML = `
-        <div class="result-item">
-            <span class="result-label">OUI Prefix:</span>
-            <span class="result-value"><code>${oui}</code></span>
-        </div>
-        <div class="result-item">
-            <span class="result-label">Vendor/Manufacturer:</span>
-            <span class="result-value vendor-name">${vendor}</span>
+        <div class="vendor-card">
+            <div class="vendor-name">${vendor}</div>
+            <div class="mac-address">${mac}</div>
+            <div class="oui-prefix">OUI Prefix: ${mac.substring(0, 8)}</div>
         </div>
     `;
     
@@ -235,8 +129,8 @@ function displayResults(mac, oui, vendor, details) {
     const formats = [
         { name: 'Colon notation', value: mac },
         { name: 'Hyphen notation', value: mac.replace(/:/g, '-') },
+        { name: 'Dot notation (Cisco)', value: mac.replace(/:/g, '').match(/.{4}/g).join('.') },
         { name: 'No separator', value: mac.replace(/:/g, '') },
-        { name: 'Dot notation (Cisco)', value: mac.replace(/:/g, '').match(/.{1,4}/g).join('.') },
         { name: 'Space notation', value: mac.replace(/:/g, ' ') }
     ];
     
@@ -245,7 +139,7 @@ function displayResults(mac, oui, vendor, details) {
             <div class="format-name">${format.name}:</div>
             <div class="format-value-container">
                 <code class="format-value">${format.value}</code>
-                <button class="copy-format-btn" onclick="copyFormat('${format.value}', this)">Copy</button>
+                <button class="copy-format-btn" data-copy-value="${format.value}">Copy</button>
             </div>
         </div>
     `).join('');

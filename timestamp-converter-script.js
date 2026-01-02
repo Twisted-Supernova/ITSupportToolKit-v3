@@ -1,43 +1,29 @@
 // DOM Elements
-const currentUnix = document.getElementById('currentUnix');
-const currentDateTime = document.getElementById('currentDateTime');
-const currentISO = document.getElementById('currentISO');
 const unixInput = document.getElementById('unixInput');
 const convertUnixBtn = document.getElementById('convertUnixBtn');
 const unixResult = document.getElementById('unixResult');
 const dateTimeInput = document.getElementById('dateTimeInput');
 const convertDateBtn = document.getElementById('convertDateBtn');
 const dateResult = document.getElementById('dateResult');
-const nowTimestamp = document.getElementById('nowTimestamp');
-const todayMidnight = document.getElementById('todayMidnight');
-const tomorrowMidnight = document.getElementById('tomorrowMidnight');
 
-// Update current time every second
-function updateCurrentTime() {
-    const now = new Date();
-    const unixSeconds = Math.floor(now.getTime() / 1000);
-    
-    currentUnix.textContent = unixSeconds;
-    currentDateTime.textContent = now.toLocaleString('en-GB', { 
-        dateStyle: 'full', 
-        timeStyle: 'long' 
-    });
-    currentISO.textContent = now.toISOString();
-}
-
-// Start updating current time
-updateCurrentTime();
-setInterval(updateCurrentTime, 1000);
+// Quick action buttons
+const currentTimestampBtn = document.getElementById('currentTimestampBtn');
+const todayMidnightBtn = document.getElementById('todayMidnightBtn');
+const tomorrowMidnightBtn = document.getElementById('tomorrowMidnightBtn');
 
 // Event listeners
 convertUnixBtn.addEventListener('click', convertUnixToHuman);
 convertDateBtn.addEventListener('click', convertHumanToUnix);
-nowTimestamp.addEventListener('click', fillCurrentTimestamp);
-todayMidnight.addEventListener('click', fillTodayMidnight);
-tomorrowMidnight.addEventListener('click', fillTomorrowMidnight);
+currentTimestampBtn.addEventListener('click', fillCurrentTimestamp);
+todayMidnightBtn.addEventListener('click', fillTodayMidnight);
+tomorrowMidnightBtn.addEventListener('click', fillTomorrowMidnight);
 
-unixInput.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') convertUnixToHuman();
+// Event delegation for dynamically created copy buttons
+document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('copy-inline-btn')) {
+        const textToCopy = e.target.dataset.copyValue;
+        copyToClipboard(textToCopy, e.target);
+    }
 });
 
 // Convert Unix timestamp to human readable
@@ -56,8 +42,9 @@ function convertUnixToHuman() {
         return;
     }
     
-    // Handle both seconds and milliseconds
-    const date = timestamp > 10000000000 ? new Date(timestamp) : new Date(timestamp * 1000);
+    // Auto-detect if milliseconds or seconds
+    const date = timestamp > 10000000000 ? 
+        new Date(timestamp) : new Date(timestamp * 1000);
     
     if (isNaN(date.getTime())) {
         showResult(unixResult, 'Invalid timestamp value', 'error');
@@ -120,17 +107,17 @@ function convertHumanToUnix() {
             <div class="result-item">
                 <strong>Unix Timestamp (seconds):</strong>
                 <code>${unixSeconds}</code>
-                <button class="copy-inline-btn" onclick="copyToClipboard('${unixSeconds}', this)">Copy</button>
+                <button class="copy-inline-btn" data-copy-value="${unixSeconds}">Copy</button>
             </div>
             <div class="result-item">
                 <strong>Unix Timestamp (milliseconds):</strong>
                 <code>${unixMilliseconds}</code>
-                <button class="copy-inline-btn" onclick="copyToClipboard('${unixMilliseconds}', this)">Copy</button>
+                <button class="copy-inline-btn" data-copy-value="${unixMilliseconds}">Copy</button>
             </div>
             <div class="result-item">
                 <strong>ISO 8601:</strong>
                 <code>${date.toISOString()}</code>
-                <button class="copy-inline-btn" onclick="copyToClipboard('${date.toISOString()}', this)">Copy</button>
+                <button class="copy-inline-btn" data-copy-value="${date.toISOString()}">Copy</button>
             </div>
             <div class="result-item">
                 <strong>UTC String:</strong>
@@ -207,18 +194,14 @@ function copyToClipboard(text, button) {
     navigator.clipboard.writeText(text).then(() => {
         const originalText = button.textContent;
         button.textContent = 'Copied!';
-        button.style.backgroundColor = '#28a745';
+        button.classList.add('copied');
         
         setTimeout(() => {
             button.textContent = originalText;
-            button.style.backgroundColor = '';
+            button.classList.remove('copied');
         }, 2000);
     }).catch(err => {
-        console.error('Copy failed:', err);
+        console.error('Failed to copy:', err);
+        alert('Failed to copy to clipboard');
     });
 }
-
-// Set default datetime to now
-window.addEventListener('load', () => {
-    dateTimeInput.value = formatDateTimeLocal(new Date());
-});

@@ -22,12 +22,12 @@
     Referrer-Policy = "strict-origin-when-cross-origin"
     
     # Content Security Policy - restrict resource loading
-    # Allow scripts and styles from same origin and inline (needed for our tools)
-    # Allow connections to external APIs we use
+    # Scripts and styles only from same origin (no inline)
+    # Significantly improved XSS protection by removing 'unsafe-inline'
     Content-Security-Policy = '''
       default-src 'self';
-      script-src 'self' 'unsafe-inline';
-      style-src 'self' 'unsafe-inline';
+      script-src 'self';
+      style-src 'self';
       img-src 'self' data: https:;
       font-src 'self' data:;
       connect-src 'self' https://dns.google https://api.anthropic.com https://www.whoisxmlapi.com https://ip-api.com;
