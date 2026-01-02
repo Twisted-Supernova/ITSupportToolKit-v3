@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Troubleshooting Flowcharts - IT Support Toolkit</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            background-color: #F8FAFC;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .nav-link {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 20px;
+            background: #2563EB;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        .nav-link:hover {
+            background: #1E40AF;
+        }
+
+        .flowchart-section {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .flowchart-section h2 {
+            color: #333;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #06B6D4;
+        }
+
+        .mermaid {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .header, .flowchart-section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Troubleshooting Flowcharts</h1>
+            <p class="subtitle">Quick decision trees for common support scenarios</p>
+            <a href="/" class="nav-link">← Back to Home</a>
+        </div>
+
+        <div class="flowchart-section">
+            <h2>1. No Network Connectivity</h2>
+            <div class="mermaid">
+                graph TD
+                    A[No Network Connectivity] --> B{Physical connection OK?}
+                    B -->|No| C[Check cables/Wi-Fi]
+                    B -->|Yes| D{IP address assigned?}
+                    C --> D
+                    D -->|No| E[Check DHCP/static IP]
+                    D -->|Yes| F{Can ping gateway?}
+                    E --> F
+                    F -->|No| G[Check network config/gateway]
+                    F -->|Yes| H{Can ping external IP?}
+                    G --> H
+                    H -->|No| I[Check routing/firewall]
+                    H -->|Yes| J{DNS resolving?}
+                    I --> J
+                    J -->|No| K[Check DNS settings]
+                    J -->|Yes| L[Check proxy/application settings]
+                    K --> M[Issue Resolved]
+                    L --> M
+            </div>
+        </div>
+
+        <div class="flowchart-section">
+            <h2>2. Can't Login to PC</h2>
+            <div class="mermaid">
+                graph TD
+                    A[Can't Login to PC] --> B{Correct credentials entered?}
+                    B -->|No| C[Reset/verify password]
+                    B -->|Yes| D{Account locked?}
+                    C --> D
+                    D -->|Yes| E[Unlock account in AD]
+                    D -->|No| F{Domain connection OK?}
+                    E --> F
+                    F -->|No| G[Check network/VPN/domain controller]
+                    F -->|Yes| H{Profile loading?}
+                    G --> H
+                    H -->|No| I[Check profile path/disk space]
+                    H -->|Yes| J{Error message shown?}
+                    I --> J
+                    J -->|Yes| K[Research specific error]
+                    J -->|No| L[Check Group Policy/permissions]
+                    K --> M[Issue Resolved]
+                    L --> M
+            </div>
+        </div>
+
+        <div class="flowchart-section">
+            <h2>3. Email Not Working</h2>
+            <div class="mermaid">
+                graph TD
+                    A[Email Not Working] --> B{Using Outlook/OWA?}
+                    B -->|OWA| C{OWA accessible?}
+                    B -->|Outlook| D{Outlook opens?}
+                    C -->|No| E[Check O365 service status]
+                    C -->|Yes| F[Issue is Outlook-specific]
+                    D -->|No| G[Repair/reinstall Outlook]
+                    D -->|Yes| H{Sending/receiving test OK?}
+                    F --> H
+                    G --> H
+                    H -->|No| I{Connected to Exchange?}
+                    H -->|Yes| J[Check specific mailbox/rules]
+                    I -->|No| K[Recreate Outlook profile]
+                    I -->|Yes| L{Cached mode enabled?}
+                    K --> M[Issue Resolved]
+                    L -->|Yes| N[Clear cache/OST file]
+                    L -->|No| N
+                    N --> M
+                    J --> M
+            </div>
+        </div>
+
+        <div class="flowchart-section">
+            <h2>4. Printer Won't Print</h2>
+            <div class="mermaid">
+                graph TD
+                    A[Printer Won't Print] --> B{Printer powered on?}
+                    B -->|No| C[Power on printer]
+                    B -->|Yes| D{Paper/toner OK?}
+                    C --> D
+                    D -->|No| E[Refill supplies]
+                    D -->|Yes| F{Error on printer display?}
+                    E --> F
+                    F -->|Yes| G[Clear error/check manual]
+                    F -->|No| H{Network/USB connected?}
+                    G --> H
+                    H -->|No| I[Reconnect/check cables]
+                    H -->|Yes| J{Print test page from printer?}
+                    I --> J
+                    J -->|No| K[Check printer hardware]
+                    J -->|Yes| L{Can ping printer IP?}
+                    K --> M[Contact printer support]
+                    L -->|No| N[Check network/IP settings]
+                    L -->|Yes| O{Driver installed?}
+                    N --> O
+                    O -->|No| P[Install/update driver]
+                    O -->|Yes| Q[Clear print queue/restart spooler]
+                    P --> R[Issue Resolved]
+                    Q --> R
+            </div>
+        </div>
+
+        <div class="flowchart-section">
+            <h2>5. Slow Performance</h2>
+            <div class="mermaid">
+                graph TD
+                    A[Slow Performance] --> B{High CPU usage?}
+                    B -->|Yes| C[Identify process/check Task Manager]
+                    B -->|No| D{High memory usage?}
+                    C --> E[Stop unnecessary processes]
+                    D -->|Yes| F[Check memory-heavy applications]
+                    D -->|No| G{Disk usage high?}
+                    F --> H[Close apps/add RAM if needed]
+                    G -->|Yes| I[Check disk activity in Task Manager]
+                    G -->|No| J{Network slow?}
+                    I --> K[Scan for malware/disable search indexing]
+                    J -->|Yes| L[Test network speed/check bandwidth]
+                    J -->|No| M{Recent updates installed?}
+                    L --> M
+                    K --> M
+                    E --> M
+                    H --> M
+                    M -->|Yes| N[Check update conflicts/drivers]
+                    M -->|No| O[Run disk cleanup/check startup items]
+                    N --> P[Issue Resolved]
+                    O --> P
+            </div>
+        </div>
+
+        <div class="flowchart-section">
+            <h2>6. Application Crashes</h2>
+            <div class="mermaid">
+                graph TD
+                    A[Application Crashes] --> B{Error message shown?}
+                    B -->|Yes| C[Note error code/message]
+                    B -->|No| D[Check Event Viewer logs]
+                    C --> E{Known error code?}
+                    D --> E
+                    E -->|Yes| F[Apply known fix]
+                    E -->|No| G{Happens to all users?}
+                    F --> H[Issue Resolved]
+                    G -->|Yes| I[Check application version/updates]
+                    G -->|No| J[Check user profile]
+                    I --> K{Updates available?}
+                    J --> L[Try different user profile]
+                    K -->|Yes| M[Apply updates]
+                    K -->|No| N{Dependencies installed?}
+                    M --> H
+                    L --> O{Works with different profile?}
+                    O -->|Yes| P[Rebuild user profile/settings]
+                    O -->|No| Q[Reinstall application]
+                    N -->|No| R[Install missing dependencies/.NET/VC++]
+                    N -->|Yes| Q
+                    P --> H
+                    Q --> H
+                    R --> H
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'default',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            }
+        });
+    </script>
+</body>
+</html>
