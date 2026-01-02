@@ -22,11 +22,10 @@
     Referrer-Policy = "strict-origin-when-cross-origin"
     
     # Content Security Policy - restrict resource loading
-    # Scripts and styles only from same origin (no inline)
-    # Significantly improved XSS protection by removing 'unsafe-inline'
+    # Updated to allow Mermaid.js CDN for flowcharts
     Content-Security-Policy = '''
       default-src 'self';
-      script-src 'self';
+      script-src 'self' https://cdn.jsdelivr.net;
       style-src 'self';
       img-src 'self' data: https:;
       font-src 'self' data:;
