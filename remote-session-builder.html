@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remote Session Command Builder - IT Support Toolkit</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            padding: 30px;
+        }
+
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 2em;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+
+        .back-link {
+            display: inline-block;
+            color: #667eea;
+            text-decoration: none;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .tab {
+            padding: 12px 24px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 1em;
+            color: #666;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .tab:hover {
+            color: #667eea;
+        }
+
+        .tab.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+            font-weight: 600;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            color: #333;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        input[type="text"],
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 5px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus,
+        select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .checkbox-group label {
+            margin: 0;
+            cursor: pointer;
+        }
+
+        .output-box {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            margin-top: 20px;
+            position: relative;
+            min-height: 60px;
+            word-break: break-all;
+            line-height: 1.6;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background 0.3s;
+        }
+
+        .copy-btn:hover {
+            background: #5568d3;
+        }
+
+        .copy-btn.copied {
+            background: #28a745;
+        }
+
+        .info-box {
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .info-box h3 {
+            color: #0d47a1;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .info-box ul {
+            margin-left: 20px;
+            color: #333;
+        }
+
+        .info-box li {
+            margin: 5px 0;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .warning-box strong {
+            color: #856404;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .generate-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            margin-top: 20px;
+            transition: background 0.3s;
+        }
+
+        .generate-btn:hover {
+            background: #5568d3;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.5em;
+            }
+
+            .tabs {
+                flex-direction: column;
+                gap: 0;
+            }
+
+            .tab {
+                border-bottom: 1px solid #e0e0e0;
+            }
+
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← Back to IT Support Toolkit</a>
+        
+        <h1>Remote Session Command Builder</h1>
+        <p class="subtitle">Generate quick commands for remote administration sessions</p>
+
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab('psexec')">PSExec</button>
+            <button class="tab" onclick="switchTab('powershell')">Remote PowerShell</button>
+            <button class="tab" onclick="switchTab('rdp')">RDP</button>
+        </div>
+
+        <!-- PSExec Tab -->
+        <div id="psexec" class="tab-content active">
+            <div class="form-group">
+                <label>Remote Computer Name or IP:</label>
+                <input type="text" id="psexec-computer" placeholder="PC-NAME or 192.168.1.100">
+            </div>
+
+            <div class="form-group">
+                <label>Username (optional - leave blank for system account):</label>
+                <input type="text" id="psexec-username" placeholder="DOMAIN\Username">
+            </div>
+
+            <div class="form-group">
+                <label>Command to Execute:</label>
+                <input type="text" id="psexec-command" placeholder="cmd.exe" value="cmd.exe">
+            </div>
+
+            <div class="options-grid">
+                <div class="checkbox-group">
+                    <input type="checkbox" id="psexec-system" checked>
+                    <label for="psexec-system">Run as SYSTEM</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="psexec-interactive" checked>
+                    <label for="psexec-interactive">Interactive mode</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="psexec-elevated">
+                    <label for="psexec-elevated">Run elevated (admin)</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="psexec-copy">
+                    <label for="psexec-copy">Force copy PSExec</label>
+                </div>
+            </div>
+
+            <button class="generate-btn" onclick="generatePSExec()">Generate Command</button>
+
+            <div class="output-box" id="psexec-output">
+                <button class="copy-btn" onclick="copyOutput('psexec-output')">Copy</button>
+                Command will appear here...
+            </div>
+
+            <div class="info-box">
+                <h3>PSExec Quick Reference</h3>
+                <ul>
+                    <li><strong>-s</strong> - Run as SYSTEM account</li>
+                    <li><strong>-i</strong> - Interactive mode (opens GUI on remote system)</li>
+                    <li><strong>-h</strong> - Run with elevated token (if available)</li>
+                    <li><strong>-u</strong> - Specify username</li>
+                    <li><strong>-p</strong> - Specify password (will prompt if omitted)</li>
+                    <li><strong>-c</strong> - Copy executable to remote system</li>
+                    <li><strong>-f</strong> - Force copy even if file exists</li>
+                    <li><strong>-d</strong> - Don't wait for process to terminate</li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                <strong>Security Note:</strong> PSExec requires SMB access and admin rights on the remote system. It may be flagged by antivirus. Download from Microsoft Sysinternals: https://learn.microsoft.com/sysinternals/downloads/psexec
+            </div>
+        </div>
+
+        <!-- PowerShell Tab -->
+        <div id="powershell" class="tab-content">
+            <div class="form-group">
+                <label>Remote Computer Name or IP:</label>
+                <input type="text" id="ps-computer" placeholder="PC-NAME or 192.168.1.100">
+            </div>
+
+            <div class="form-group">
+                <label>Connection Type:</label>
+                <select id="ps-type">
+                    <option value="enter">Enter-PSSession (Interactive)</option>
+                    <option value="invoke">Invoke-Command (Run Command)</option>
+                    <option value="new">New-PSSession (Persistent)</option>
+                </select>
+            </div>
+
+            <div class="form-group" id="ps-command-group" style="display: none;">
+                <label>Command to Execute:</label>
+                <input type="text" id="ps-command" placeholder="Get-Service">
+            </div>
+
+            <div class="options-grid">
+                <div class="checkbox-group">
+                    <input type="checkbox" id="ps-credential">
+                    <label for="ps-credential">Use alternate credentials</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="ps-ssl">
+                    <label for="ps-ssl">Use SSL (HTTPS)</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="ps-auth">
+                    <label for="ps-auth">Specify CredSSP authentication</label>
+                </div>
+            </div>
+
+            <button class="generate-btn" onclick="generatePowerShell()">Generate Command</button>
+
+            <div class="output-box" id="ps-output">
+                <button class="copy-btn" onclick="copyOutput('ps-output')">Copy</button>
+                Command will appear here...
+            </div>
+
+            <div class="info-box">
+                <h3>PowerShell Remoting Setup</h3>
+                <ul>
+                    <li><strong>Enable on remote PC:</strong> Run <code>Enable-PSRemoting -Force</code> as admin</li>
+                    <li><strong>Trust hosts (workgroup):</strong> <code>Set-Item WSMan:\localhost\Client\TrustedHosts -Value "*"</code></li>
+                    <li><strong>Test connection:</strong> <code>Test-WSMan -ComputerName PC-NAME</code></li>
+                    <li><strong>Default Port:</strong> HTTP (5985), HTTPS (5986)</li>
+                    <li><strong>Firewall:</strong> Ensure WinRM service is allowed through firewall</li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                <strong>CredSSP Warning:</strong> CredSSP authentication allows credential delegation but increases security risk. Only use in trusted environments.
+            </div>
+        </div>
+
+        <!-- RDP Tab -->
+        <div id="rdp" class="tab-content">
+            <div class="form-group">
+                <label>Remote Computer Name or IP:</label>
+                <input type="text" id="rdp-computer" placeholder="PC-NAME or 192.168.1.100">
+            </div>
+
+            <div class="form-group">
+                <label>Username (optional):</label>
+                <input type="text" id="rdp-username" placeholder="DOMAIN\Username">
+            </div>
+
+            <div class="form-group">
+                <label>Screen Size:</label>
+                <select id="rdp-size">
+                    <option value="fullscreen">Full Screen</option>
+                    <option value="1920x1080">1920x1080</option>
+                    <option value="1600x900">1600x900</option>
+                    <option value="1366x768">1366x768</option>
+                    <option value="1280x720">1280x720</option>
+                    <option value="800x600">800x600</option>
+                </select>
+            </div>
+
+            <div class="options-grid">
+                <div class="checkbox-group">
+                    <input type="checkbox" id="rdp-admin" checked>
+                    <label for="rdp-admin">Console session (/admin)</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="rdp-multimon">
+                    <label for="rdp-multimon">Use all monitors</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="rdp-public">
+                    <label for="rdp-public">Public mode (no caching)</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="rdp-restricted">
+                    <label for="rdp-restricted">Restricted Admin mode</label>
+                </div>
+            </div>
+
+            <button class="generate-btn" onclick="generateRDP()">Generate Command</button>
+
+            <div class="output-box" id="rdp-output">
+                <button class="copy-btn" onclick="copyOutput('rdp-output')">Copy</button>
+                Command will appear here...
+            </div>
+
+            <div class="info-box">
+                <h3>RDP Command Line Options</h3>
+                <ul>
+                    <li><strong>/v:</strong> Specify computer to connect to</li>
+                    <li><strong>/admin</strong> - Connect to console session (admin session)</li>
+                    <li><strong>/f</strong> - Start in full screen mode</li>
+                    <li><strong>/w:</strong> Screen width</li>
+                    <li><strong>/h:</strong> Screen height</li>
+                    <li><strong>/public</strong> - Runs RDP in public mode (no caching)</li>
+                    <li><strong>/span</strong> - Match RDP width/height with virtual desktop</li>
+                    <li><strong>/multimon</strong> - Use multiple monitors</li>
+                    <li><strong>/restrictedAdmin</strong> - Connect in Restricted Admin mode</li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                <strong>Restricted Admin Mode:</strong> Prevents credentials from being sent to remote computer. Use for enhanced security, but some features may not work. Requires Windows Server 2012 R2 or Windows 8.1 or later.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function switchTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // Show selected tab
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // Show/hide command field based on PowerShell connection type
+        document.getElementById('ps-type').addEventListener('change', function() {
+            const commandGroup = document.getElementById('ps-command-group');
+            if (this.value === 'invoke') {
+                commandGroup.style.display = 'block';
+            } else {
+                commandGroup.style.display = 'none';
+            }
+        });
+
+        function generatePSExec() {
+            const computer = document.getElementById('psexec-computer').value.trim();
+            const username = document.getElementById('psexec-username').value.trim();
+            const command = document.getElementById('psexec-command').value.trim();
+            const isSystem = document.getElementById('psexec-system').checked;
+            const isInteractive = document.getElementById('psexec-interactive').checked;
+            const isElevated = document.getElementById('psexec-elevated').checked;
+            const forceCopy = document.getElementById('psexec-copy').checked;
+
+            if (!computer) {
+                document.getElementById('psexec-output').innerHTML = '<button class="copy-btn" onclick="copyOutput(\'psexec-output\')">Copy</button>Please enter a computer name or IP address.';
+                return;
+            }
+
+            let cmd = `psexec \\\\${computer}`;
+            
+            if (username && !isSystem) {
+                cmd += ` -u ${username} -p *`;
+            }
+            
+            if (isSystem) {
+                cmd += ' -s';
+            }
+            
+            if (isInteractive) {
+                cmd += ' -i';
+            }
+            
+            if (isElevated) {
+                cmd += ' -h';
+            }
+            
+            if (forceCopy) {
+                cmd += ' -c -f';
+            }
+            
+            cmd += ` ${command}`;
+
+            document.getElementById('psexec-output').innerHTML = `<button class="copy-btn" onclick="copyOutput('psexec-output')">Copy</button>${cmd}`;
+        }
+
+        function generatePowerShell() {
+            const computer = document.getElementById('ps-computer').value.trim();
+            const type = document.getElementById('ps-type').value;
+            const command = document.getElementById('ps-command').value.trim();
+            const useCredential = document.getElementById('ps-credential').checked;
+            const useSSL = document.getElementById('ps-ssl').checked;
+            const useCredSSP = document.getElementById('ps-auth').checked;
+
+            if (!computer) {
+                document.getElementById('ps-output').innerHTML = '<button class="copy-btn" onclick="copyOutput(\'ps-output\')">Copy</button>Please enter a computer name or IP address.';
+                return;
+            }
+
+            let cmd = '';
+
+            if (useCredential) {
+                cmd = '$cred = Get-Credential\n';
+            }
+
+            switch(type) {
+                case 'enter':
+                    cmd += `Enter-PSSession -ComputerName ${computer}`;
+                    break;
+                case 'invoke':
+                    if (!command) {
+                        document.getElementById('ps-output').innerHTML = '<button class="copy-btn" onclick="copyOutput(\'ps-output\')">Copy</button>Please enter a command to execute.';
+                        return;
+                    }
+                    cmd += `Invoke-Command -ComputerName ${computer} -ScriptBlock {${command}}`;
+                    break;
+                case 'new':
+                    cmd += `$session = New-PSSession -ComputerName ${computer}`;
+                    break;
+            }
+
+            if (useCredential) {
+                cmd += ' -Credential $cred';
+            }
+
+            if (useSSL) {
+                cmd += ' -UseSSL';
+            }
+
+            if (useCredSSP) {
+                cmd += ' -Authentication CredSSP';
+            }
+
+            document.getElementById('ps-output').innerHTML = `<button class="copy-btn" onclick="copyOutput('ps-output')">Copy</button>${cmd}`;
+        }
+
+        function generateRDP() {
+            const computer = document.getElementById('rdp-computer').value.trim();
+            const username = document.getElementById('rdp-username').value.trim();
+            const size = document.getElementById('rdp-size').value;
+            const isAdmin = document.getElementById('rdp-admin').checked;
+            const isMultimon = document.getElementById('rdp-multimon').checked;
+            const isPublic = document.getElementById('rdp-public').checked;
+            const isRestricted = document.getElementById('rdp-restricted').checked;
+
+            if (!computer) {
+                document.getElementById('rdp-output').innerHTML = '<button class="copy-btn" onclick="copyOutput(\'rdp-output\')">Copy</button>Please enter a computer name or IP address.';
+                return;
+            }
+
+            let cmd = `mstsc /v:${computer}`;
+
+            if (isAdmin) {
+                cmd += ' /admin';
+            }
+
+            if (size === 'fullscreen') {
+                cmd += ' /f';
+            } else {
+                const dimensions = size.split('x');
+                cmd += ` /w:${dimensions[0]} /h:${dimensions[1]}`;
+            }
+
+            if (isMultimon) {
+                cmd += ' /multimon';
+            }
+
+            if (isPublic) {
+                cmd += ' /public';
+            }
+
+            if (isRestricted) {
+                cmd += ' /restrictedAdmin';
+            }
+
+            let output = cmd;
+            if (username) {
+                output += `\n\n# When prompted, enter username: ${username}`;
+            }
+
+            document.getElementById('rdp-output').innerHTML = `<button class="copy-btn" onclick="copyOutput('rdp-output')">Copy</button>${output}`;
+        }
+
+        function copyOutput(elementId) {
+            const element = document.getElementById(elementId);
+            const button = element.querySelector('.copy-btn');
+            const text = element.textContent.replace('Copy', '').replace('Copied!', '').trim();
+
+            navigator.clipboard.writeText(text).then(() => {
+                button.textContent = 'Copied!';
+                button.classList.add('copied');
+                setTimeout(() => {
+                    button.textContent = 'Copy';
+                    button.classList.remove('copied');
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>

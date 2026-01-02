@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Office 365 License Decoder - IT Support Toolkit</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            padding: 30px;
+        }
+
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 2em;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+
+        .back-link {
+            display: inline-block;
+            color: #667eea;
+            text-decoration: none;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .input-section {
+            margin-bottom: 30px;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #667eea;
+            border-radius: 5px;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: #5568d3;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .helper-text {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 15px;
+        }
+
+        .quick-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background 0.3s;
+        }
+
+        .action-btn:hover {
+            background: #5568d3;
+        }
+
+        .action-btn.secondary {
+            background: #6c757d;
+        }
+
+        .action-btn.secondary:hover {
+            background: #5a6268;
+        }
+
+        .results-section {
+            margin-top: 30px;
+        }
+
+        .result-card {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            transition: transform 0.2s;
+        }
+
+        .result-card:hover {
+            transform: translateX(5px);
+        }
+
+        .result-card h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .sku-code {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            display: inline-block;
+            margin: 5px 0;
+        }
+
+        .license-details {
+            margin-top: 10px;
+            color: #555;
+        }
+
+        .license-details p {
+            margin: 5px 0;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.85em;
+            font-weight: 500;
+            margin-right: 8px;
+            margin-top: 8px;
+        }
+
+        .badge-e5 {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .badge-e3 {
+            background: #cce5ff;
+            color: #004085;
+        }
+
+        .badge-e1 {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .badge-business {
+            background: #e2e3e5;
+            color: #383d41;
+        }
+
+        .badge-legacy {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-card h3 {
+            font-size: 2em;
+            margin-bottom: 5px;
+        }
+
+        .stat-card p {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        .info-box {
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .info-box h3 {
+            color: #0d47a1;
+            margin-bottom: 10px;
+        }
+
+        .command-box {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            margin: 15px 0;
+            position: relative;
+            overflow-x: auto;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .copy-btn:hover {
+            background: #5568d3;
+        }
+
+        .copy-btn.copied {
+            background: #28a745;
+        }
+
+        .category-filter {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .filter-btn:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .filter-btn.active {
+            background: #667eea;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.5em;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← Back to IT Support Toolkit</a>
+        
+        <h1>Office 365 License Decoder</h1>
+        <p class="subtitle">Decode cryptic SKU codes into readable Microsoft 365 license names</p>
+
+        <div class="stats">
+            <div class="stat-card">
+                <h3 id="total-licenses">0</h3>
+                <p>Total Licenses</p>
+            </div>
+            <div class="stat-card">
+                <h3 id="search-results">0</h3>
+                <p>Search Results</p>
+            </div>
+            <div class="stat-card">
+                <h3 id="active-filter">All</h3>
+                <p>Active Filter</p>
+            </div>
+        </div>
+
+        <div class="input-section">
+            <input type="text" class="search-box" id="searchInput" 
+                   placeholder="Enter SKU code (e.g., ENTERPRISEPACK) or search by name...">
+            <p class="helper-text">Enter a full SKU code, partial name, or search term. Examples: "E5", "Teams", "ENTERPRISEPACK"</p>
+            
+            <div class="quick-actions">
+                <button class="action-btn" onclick="showAllLicenses()">Show All Licenses</button>
+                <button class="action-btn secondary" onclick="clearSearch()">Clear Search</button>
+                <button class="action-btn secondary" onclick="exportToCSV()">Export to CSV</button>
+            </div>
+        </div>
+
+        <div class="category-filter">
+            <button class="filter-btn active" onclick="filterCategory('all')">All</button>
+            <button class="filter-btn" onclick="filterCategory('enterprise')">Enterprise</button>
+            <button class="filter-btn" onclick="filterCategory('business')">Business</button>
+            <button class="filter-btn" onclick="filterCategory('frontline')">Frontline</button>
+            <button class="filter-btn" onclick="filterCategory('education')">Education</button>
+            <button class="filter-btn" onclick="filterCategory('legacy')">Legacy</button>
+        </div>
+
+        <div class="results-section" id="results">
+            <div class="no-results">
+                <p>Enter a SKU code or license name to search, or click "Show All Licenses" to view the complete list.</p>
+            </div>
+        </div>
+
+        <div class="info-box">
+            <h3>PowerShell Commands for License Management</h3>
+            <div class="command-box">
+# Connect to Microsoft Graph
+Connect-MgGraph -Scopes "Organization.Read.All"
+
+# Get all available licenses in your tenant
+Get-MgSubscribedSku | Select SkuPartNumber, SkuId, ConsumedUnits -ExpandProperty PrepaidUnits
+
+# Get user's assigned licenses
+Get-MgUserLicenseDetail -UserId user@domain.com | Select SkuPartNumber, SkuId
+
+# Export all users with their licenses
+Get-MgUser -All -Property DisplayName,UserPrincipalName,AssignedLicenses | Select DisplayName, UserPrincipalName, @{N="Licenses";E={($_.AssignedLicenses.SkuId -join '; ')}}
+                <button class="copy-btn" onclick="copyCommand()">Copy</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Comprehensive license database
+        const licenses = [
+            // Microsoft 365 Enterprise
+            { sku: 'SPE_E5', name: 'Microsoft 365 E5', category: 'enterprise', badge: 'e5', description: 'Complete enterprise solution with advanced security, compliance, and analytics' },
+            { sku: 'SPE_E3', name: 'Microsoft 365 E3', category: 'enterprise', badge: 'e3', description: 'Core enterprise productivity and security' },
+            { sku: 'ENTERPRISEPREMIUM', name: 'Office 365 E5', category: 'enterprise', badge: 'e5', description: 'Office 365 enterprise with advanced features' },
+            { sku: 'ENTERPRISEPACK', name: 'Office 365 E3', category: 'enterprise', badge: 'e3', description: 'Core Office 365 enterprise suite' },
+            { sku: 'STANDARDPACK', name: 'Office 365 E1', category: 'enterprise', badge: 'e1', description: 'Web-based Office apps and services' },
+            { sku: 'SPE_F1', name: 'Microsoft 365 F1', category: 'frontline', badge: 'e1', description: 'Frontline worker solution' },
+            { sku: 'SPE_F3', name: 'Microsoft 365 F3', category: 'frontline', badge: 'e1', description: 'Frontline worker with Office apps' },
+
+            // Microsoft 365 Business
+            { sku: 'SPB', name: 'Microsoft 365 Business Premium', category: 'business', badge: 'business', description: 'Complete small business solution' },
+            { sku: 'O365_BUSINESS_PREMIUM', name: 'Microsoft 365 Business Standard', category: 'business', badge: 'business', description: 'Business productivity and collaboration' },
+            { sku: 'O365_BUSINESS_ESSENTIALS', name: 'Microsoft 365 Business Basic', category: 'business', badge: 'business', description: 'Web-based apps for business' },
+            { sku: 'SMB_BUSINESS', name: 'Microsoft 365 Apps for Business', category: 'business', badge: 'business', description: 'Office desktop apps for business' },
+            
+            // Office 365 Apps
+            { sku: 'OFFICESUBSCRIPTION', name: 'Microsoft 365 Apps for Enterprise', category: 'enterprise', badge: 'e3', description: 'Office desktop apps (formerly Office 365 ProPlus)' },
+            { sku: 'PROJECTPROFESSIONAL', name: 'Project Plan 5', category: 'enterprise', badge: 'e3', description: 'Project Online Professional' },
+            { sku: 'PROJECTESSENTIALS', name: 'Project Plan 3', category: 'enterprise', badge: 'e3', description: 'Project Online Essentials' },
+            { sku: 'VISIOCLIENT', name: 'Visio Plan 2', category: 'enterprise', badge: 'e3', description: 'Visio Online Plan 2' },
+            { sku: 'VISIOONLINE_PLAN1', name: 'Visio Plan 1', category: 'enterprise', badge: 'e1', description: 'Visio web app' },
+
+            // Security & Compliance
+            { sku: 'THREAT_INTELLIGENCE', name: 'Microsoft Defender for Office 365 Plan 2', category: 'enterprise', badge: 'e5', description: 'Advanced threat protection' },
+            { sku: 'ATP_ENTERPRISE', name: 'Microsoft Defender for Office 365 Plan 1', category: 'enterprise', badge: 'e3', description: 'Basic threat protection' },
+            { sku: 'EMS', name: 'Enterprise Mobility + Security E5', category: 'enterprise', badge: 'e5', description: 'Complete identity and access management' },
+            { sku: 'EMSPREMIUM', name: 'Enterprise Mobility + Security E3', category: 'enterprise', badge: 'e3', description: 'Core identity and device management' },
+            { sku: 'AAD_PREMIUM', name: 'Azure Active Directory Premium P1', category: 'enterprise', badge: 'e3', description: 'Identity and access management' },
+            { sku: 'AAD_PREMIUM_P2', name: 'Azure Active Directory Premium P2', category: 'enterprise', badge: 'e5', description: 'Advanced identity protection' },
+            { sku: 'INTUNE_A', name: 'Microsoft Intune', category: 'enterprise', badge: 'e3', description: 'Device and app management' },
+            { sku: 'INFORMATION_PROTECTION_COMPLIANCE', name: 'Microsoft 365 E5 Compliance', category: 'enterprise', badge: 'e5', description: 'Advanced compliance tools' },
+            { sku: 'M365_SECURITY_COMPLIANCE_FOR_FLW', name: 'Microsoft 365 F5 Security + Compliance', category: 'frontline', badge: 'e5', description: 'Frontline security and compliance' },
+
+            // Communication
+            { sku: 'MCOSTANDARD', name: 'Microsoft Teams Essentials', category: 'business', badge: 'business', description: 'Standalone Teams license' },
+            { sku: 'MCOEV', name: 'Microsoft 365 Phone System', category: 'enterprise', badge: 'e3', description: 'Cloud-based phone system (formerly Phone System)' },
+            { sku: 'MCOMEETADV', name: 'Microsoft 365 Audio Conferencing', category: 'enterprise', badge: 'e3', description: 'Dial-in conferencing' },
+            { sku: 'TEAMS_COMMERCIAL_TRIAL', name: 'Microsoft Teams Commercial Trial', category: 'business', badge: 'business', description: 'Teams trial license' },
+
+            // Exchange
+            { sku: 'EXCHANGESTANDARD', name: 'Exchange Online Plan 1', category: 'enterprise', badge: 'e1', description: '50GB mailbox' },
+            { sku: 'EXCHANGEENTERPRISE', name: 'Exchange Online Plan 2', category: 'enterprise', badge: 'e3', description: '100GB mailbox with archiving' },
+            { sku: 'EXCHANGEARCHIVE_ADDON', name: 'Exchange Online Archiving', category: 'enterprise', badge: 'e3', description: 'Email archiving add-on' },
+            { sku: 'EXCHANGEDESKLESS', name: 'Exchange Online Kiosk', category: 'frontline', badge: 'e1', description: 'Basic email for frontline workers' },
+
+            // SharePoint & OneDrive
+            { sku: 'SHAREPOINTSTANDARD', name: 'SharePoint Online Plan 1', category: 'enterprise', badge: 'e1', description: 'Basic SharePoint' },
+            { sku: 'SHAREPOINTENTERPRISE', name: 'SharePoint Online Plan 2', category: 'enterprise', badge: 'e3', description: 'Advanced SharePoint' },
+            { sku: 'ONEDRIVESTANDARD', name: 'OneDrive for Business Plan 1', category: 'enterprise', badge: 'e1', description: '1TB storage' },
+            { sku: 'ONEDRIVE_BASIC', name: 'OneDrive for Business Basic', category: 'business', badge: 'business', description: 'Basic cloud storage' },
+
+            // Power Platform
+            { sku: 'POWER_BI_PRO', name: 'Power BI Pro', category: 'enterprise', badge: 'e3', description: 'Business analytics and reporting' },
+            { sku: 'POWER_BI_PREMIUM', name: 'Power BI Premium', category: 'enterprise', badge: 'e5', description: 'Advanced analytics platform' },
+            { sku: 'POWERAPPS_PER_USER', name: 'Power Apps per User', category: 'enterprise', badge: 'e3', description: 'Custom app development' },
+            { sku: 'FLOW_FREE', name: 'Power Automate Free', category: 'business', badge: 'business', description: 'Basic workflow automation' },
+            
+            // Dynamics 365
+            { sku: 'DYN365_ENTERPRISE_SALES', name: 'Dynamics 365 Sales Enterprise', category: 'enterprise', badge: 'e5', description: 'Sales force automation' },
+            { sku: 'DYN365_ENTERPRISE_CUSTOMER_SERVICE', name: 'Dynamics 365 Customer Service Enterprise', category: 'enterprise', badge: 'e5', description: 'Customer service management' },
+            { sku: 'DYN365_TEAM_MEMBERS', name: 'Dynamics 365 Team Members', category: 'enterprise', badge: 'e1', description: 'Basic Dynamics access' },
+
+            // Education
+            { sku: 'STANDARDWOFFPACK_FACULTY', name: 'Office 365 A1 for Faculty', category: 'education', badge: 'e1', description: 'Free for educators' },
+            { sku: 'STANDARDWOFFPACK_STUDENT', name: 'Office 365 A1 for Students', category: 'education', badge: 'e1', description: 'Free for students' },
+            { sku: 'ENTERPRISEPREMIUM_FACULTY', name: 'Office 365 A5 for Faculty', category: 'education', badge: 'e5', description: 'Premium education license' },
+            { sku: 'ENTERPRISEPREMIUM_STUDENT', name: 'Office 365 A5 for Students', category: 'education', badge: 'e5', description: 'Premium student license' },
+            { sku: 'M365EDU_A3_FACULTY', name: 'Microsoft 365 A3 for Faculty', category: 'education', badge: 'e3', description: 'Education enterprise suite' },
+            { sku: 'M365EDU_A3_STUDENT', name: 'Microsoft 365 A3 for Students', category: 'education', badge: 'e3', description: 'Student enterprise suite' },
+
+            // Windows
+            { sku: 'WIN10_PRO_ENT_SUB', name: 'Windows 10/11 Enterprise E3', category: 'enterprise', badge: 'e3', description: 'Windows Enterprise subscription' },
+            { sku: 'WIN10_VDA_E5', name: 'Windows 10/11 Enterprise E5', category: 'enterprise', badge: 'e5', description: 'Windows Enterprise E5' },
+
+            // Legacy/Retired
+            { sku: 'ENTERPRISEPREMIUM_NOPSTNCONF', name: 'Office 365 E5 Without Audio Conferencing', category: 'legacy', badge: 'legacy', description: 'Legacy E5 SKU' },
+            { sku: 'ENTERPRISEPACK_USGOV_DOD', name: 'Office 365 E3 USGOV DOD', category: 'legacy', badge: 'legacy', description: 'Government legacy' },
+            { sku: 'ENTERPRISEPACK_USGOV_GCCHIGH', name: 'Office 365 E3 USGOV GCC High', category: 'legacy', badge: 'legacy', description: 'Government legacy' },
+            { sku: 'LITEPACK', name: 'Office 365 Small Business', category: 'legacy', badge: 'legacy', description: 'Retired small business license' },
+            { sku: 'LITEPACK_P2', name: 'Office 365 Small Business Premium', category: 'legacy', badge: 'legacy', description: 'Retired small business license' },
+            { sku: 'WACONEDRIVESTANDARD', name: 'OneDrive for Business (Plan 1)', category: 'legacy', badge: 'legacy', description: 'Legacy OneDrive SKU' },
+            { sku: 'DESKLESSPACK', name: 'Office 365 F1', category: 'legacy', badge: 'legacy', description: 'Replaced by F3' },
+            { sku: 'MIDSIZEPACK', name: 'Office 365 Midsize Business', category: 'legacy', badge: 'legacy', description: 'Retired midsize license' }
+        ];
+
+        let currentFilter = 'all';
+        let displayedLicenses = [];
+
+        // Initialize
+        document.getElementById('total-licenses').textContent = licenses.length;
+
+        // Search functionality
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase().trim();
+            
+            if (searchTerm === '') {
+                displayResults([]);
+                return;
+            }
+
+            const results = licenses.filter(license => {
+                return license.sku.toLowerCase().includes(searchTerm) ||
+                       license.name.toLowerCase().includes(searchTerm) ||
+                       license.description.toLowerCase().includes(searchTerm);
+            });
+
+            displayResults(results);
+        });
+
+        function displayResults(results) {
+            displayedLicenses = results;
+            const resultsDiv = document.getElementById('results');
+            document.getElementById('search-results').textContent = results.length;
+
+            if (results.length === 0) {
+                resultsDiv.innerHTML = '<div class="no-results"><p>No licenses found matching your search.</p></div>';
+                return;
+            }
+
+            let html = '';
+            results.forEach(license => {
+                html += `
+                    <div class="result-card">
+                        <h3>${license.name}</h3>
+                        <div class="sku-code">${license.sku}</div>
+                        <span class="badge badge-${license.badge}">${license.category.toUpperCase()}</span>
+                        <div class="license-details">
+                            <p><strong>Description:</strong> ${license.description}</p>
+                        </div>
+                    </div>
+                `;
+            });
+
+            resultsDiv.innerHTML = html;
+        }
+
+        function showAllLicenses() {
+            displayResults(licenses.filter(l => currentFilter === 'all' || l.category === currentFilter));
+            document.getElementById('searchInput').value = '';
+        }
+
+        function clearSearch() {
+            document.getElementById('searchInput').value = '';
+            displayResults([]);
+            document.getElementById('search-results').textContent = '0';
+        }
+
+        function filterCategory(category) {
+            currentFilter = category;
+            
+            // Update filter buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Update active filter display
+            document.getElementById('active-filter').textContent = category.charAt(0).toUpperCase() + category.slice(1);
+
+            // If there's a search term, re-run search with filter
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
+            
+            if (searchTerm !== '') {
+                const results = licenses.filter(license => {
+                    const matchesSearch = license.sku.toLowerCase().includes(searchTerm) ||
+                           license.name.toLowerCase().includes(searchTerm) ||
+                           license.description.toLowerCase().includes(searchTerm);
+                    const matchesCategory = category === 'all' || license.category === category;
+                    return matchesSearch && matchesCategory;
+                });
+                displayResults(results);
+            } else {
+                // Just show all in category
+                const filtered = category === 'all' ? licenses : licenses.filter(l => l.category === category);
+                displayResults(filtered);
+            }
+        }
+
+        function exportToCSV() {
+            const dataToExport = displayedLicenses.length > 0 ? displayedLicenses : licenses;
+            
+            let csv = 'SKU Code,License Name,Category,Description\n';
+            dataToExport.forEach(license => {
+                csv += `"${license.sku}","${license.name}","${license.category}","${license.description}"\n`;
+            });
+
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'office365_licenses.csv';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        }
+
+        function copyCommand() {
+            const commandBox = document.querySelector('.command-box');
+            const button = commandBox.querySelector('.copy-btn');
+            const text = commandBox.textContent.replace('Copy', '').replace('Copied!', '').trim();
+
+            navigator.clipboard.writeText(text).then(() => {
+                button.textContent = 'Copied!';
+                button.classList.add('copied');
+                setTimeout(() => {
+                    button.textContent = 'Copy';
+                    button.classList.remove('copied');
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>

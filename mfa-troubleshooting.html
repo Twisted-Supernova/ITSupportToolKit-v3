@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MFA/Conditional Access Troubleshooting - IT Support Toolkit</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            padding: 30px;
+        }
+
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 2em;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+
+        .back-link {
+            display: inline-block;
+            color: #667eea;
+            text-decoration: none;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 2px solid #667eea;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+
+        .section {
+            margin-bottom: 30px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .section-header {
+            background: #667eea;
+            color: white;
+            padding: 15px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+        }
+
+        .section-header:hover {
+            background: #5568d3;
+        }
+
+        .section-header h2 {
+            font-size: 1.3em;
+            margin: 0;
+        }
+
+        .toggle-icon {
+            font-size: 1.5em;
+            transition: transform 0.3s;
+        }
+
+        .section-header.active .toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        .section-content {
+            padding: 20px;
+            display: none;
+            background: #f9f9f9;
+        }
+
+        .section-content.active {
+            display: block;
+        }
+
+        .issue {
+            background: white;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-left: 4px solid #667eea;
+            border-radius: 4px;
+        }
+
+        .issue h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .symptoms {
+            background: #fff3cd;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            border-left: 3px solid #ffc107;
+        }
+
+        .symptoms strong {
+            color: #856404;
+        }
+
+        .solution {
+            background: #d4edda;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            border-left: 3px solid #28a745;
+        }
+
+        .solution strong {
+            color: #155724;
+        }
+
+        .command-box {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 12px;
+            border-radius: 4px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            margin: 10px 0;
+            position: relative;
+            overflow-x: auto;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 0.85em;
+        }
+
+        .copy-btn:hover {
+            background: #5568d3;
+        }
+
+        .copy-btn.copied {
+            background: #28a745;
+        }
+
+        ul, ol {
+            margin: 10px 0 10px 20px;
+        }
+
+        li {
+            margin: 5px 0;
+            line-height: 1.6;
+        }
+
+        .quick-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .quick-link {
+            background: #667eea;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.2s;
+        }
+
+        .quick-link:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+        }
+
+        .warning {
+            background: #f8d7da;
+            border-left: 3px solid #dc3545;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+
+        .warning strong {
+            color: #721c24;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.5em;
+            }
+
+            .quick-links {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← Back to IT Support Toolkit</a>
+        
+        <h1>MFA/Conditional Access Troubleshooting</h1>
+        <p class="subtitle">Comprehensive guide for diagnosing and resolving MFA and Conditional Access issues</p>
+
+        <input type="text" class="search-box" id="searchBox" placeholder="Search for symptoms, errors, or issues...">
+
+        <div class="quick-links">
+            <div class="quick-link" onclick="scrollToSection('common-mfa')">Common MFA Issues</div>
+            <div class="quick-link" onclick="scrollToSection('ca-problems')">CA Policy Problems</div>
+            <div class="quick-link" onclick="scrollToSection('sign-in-logs')">Sign-in Log Analysis</div>
+            <div class="quick-link" onclick="scrollToSection('powershell')">PowerShell Commands</div>
+        </div>
+
+        <!-- Common MFA Issues -->
+        <div class="section" id="common-mfa">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>Common MFA Issues</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="issue">
+                    <h3>User Can't Receive MFA Code</h3>
+                    <div class="symptoms">
+                        <strong>Symptoms:</strong> User not receiving SMS/phone call, authentication app not showing codes
+                    </div>
+                    <div class="solution">
+                        <strong>Solutions:</strong>
+                        <ol>
+                            <li>Verify phone number is correct in Azure AD</li>
+                            <li>Check if number includes correct country code (+44 for UK)</li>
+                            <li>Try alternative authentication methods</li>
+                            <li>Clear MFA registration and re-register</li>
+                        </ol>
+                    </div>
+                    <div class="command-box">
+                        Get-MsolUser -UserPrincipalName user@domain.com | Select StrongAuthenticationMethods
+                        <button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+                    </div>
+                </div>
+
+                <div class="issue">
+                    <h3>MFA Prompting Too Frequently</h3>
+                    <div class="symptoms">
+                        <strong>Symptoms:</strong> User prompted for MFA multiple times per day, "Remember MFA" not working
+                    </div>
+                    <div class="solution">
+                        <strong>Solutions:</strong>
+                        <ol>
+                            <li>Check "Remember multi-factor authentication" setting (default 90 days)</li>
+                            <li>Verify browser isn't blocking cookies</li>
+                            <li>Check for conflicting Conditional Access policies</li>
+                            <li>Review session controls in CA policies</li>
+                        </ol>
+                    </div>
+                    <div class="warning">
+                        <strong>Note:</strong> If CA policy has "Sign-in frequency" set, it overrides "Remember MFA" settings
+                    </div>
+                </div>
+
+                <div class="issue">
+                    <h3>Unable to Set Up Authenticator App</h3>
+                    <div class="symptoms">
+                        <strong>Symptoms:</strong> QR code won't scan, "Something went wrong" error, app not generating codes
+                    </div>
+                    <div class="solution">
+                        <strong>Solutions:</strong>
+                        <ol>
+                            <li>Ensure phone's date/time is set to automatic</li>
+                            <li>Try manual entry instead of QR scan</li>
+                            <li>Check if authenticator app is up to date</li>
+                            <li>Clear app cache/data and reinstall</li>
+                            <li>Try Microsoft Authenticator instead of third-party apps</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="issue">
+                    <h3>User Locked Out - Lost MFA Device</h3>
+                    <div class="symptoms">
+                        <strong>Symptoms:</strong> User lost phone, can't complete MFA, needs immediate access
+                    </div>
+                    <div class="solution">
+                        <strong>Solutions:</strong>
+                        <ol>
+                            <li>Admin resets MFA registration (forces re-registration)</li>
+                            <li>Use Temporary Access Pass (TAP) for time-limited access</li>
+                            <li>Exclude user from MFA policy temporarily (if critical)</li>
+                        </ol>
+                    </div>
+                    <div class="command-box">
+                        # Reset MFA registration
+Set-MsolUser -UserPrincipalName user@domain.com -StrongAuthenticationMethods @()
+
+# Create Temporary Access Pass (Graph PowerShell)
+$properties = @{
+    isUsableOnce = $true
+    lifetimeInMinutes = 60
+}
+New-MgUserAuthenticationTemporaryAccessPassMethod -UserId user@domain.com -BodyParameter $properties
+                        <button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Conditional Access Problems -->
+        <div class="section" id="ca-problems">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>Conditional Access Policy Problems</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="issue">
+                    <h3>User Blocked by CA Policy</h3>
+                    <div class="symptoms">
+                        <strong>Symptoms:</strong> "Access blocked", "Your sign-in was blocked", error code with CA reference
+                    </div>
+                    <div class="solution">
+                        <strong>Troubleshooting Steps:</strong>
+                        <ol>
+                            <li>Check Azure AD Sign-in Logs for the specific failure</li>
+                            <li>Identify which CA policy blocked the user (noted in "Conditional Access" tab)</li>
+                            <li>Review policy conditions: location, device state, risk level, application</li>
+                            <li>Common causes: Unmanaged device, non-compliant device, risky sign-in, blocked location</li>
+                        </ol>
+                    </div>
+                    <div class="warning">
+                        <strong>Critical:</strong> Never disable CA policies in production without approval. Use "Report-only" mode for testing.
+                    </div>
+                </div>
+
+                <div class="issue">
+                    <h3>CA Policy Not Applying as Expected</h3>
+                    <div class="symptoms">
+                        <strong>Symptoms:</strong> Users should be prompted but aren't, policy shows as applied but isn't enforcing
+                    </div>
+                    <div class="solution">
+                        <strong>Common Causes:</strong>
+                        <ul>
+                            <li><strong>User Exclusions:</strong> Check if user/group is in exclusion list</li>
+                            <li><strong>Policy State:</strong> Verify policy is "On" not "Report-only"</li>
+                            <li><strong>Conflicting Policies:</strong> Multiple policies may conflict - check precedence</li>
+                            <li><strong>Conditions Not Met:</strong> Platform, location, or other conditions not matching</li>
+                            <li><strong>Legacy Auth:</strong> Policy may not apply to legacy authentication protocols</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="issue">
+                    <h3>Compliant Device Not Recognized</h3>
+                    <div class="symptoms">
+                        <strong>Symptoms:</strong> Device is Intune compliant but CA policy says it's not, "Your device must be managed" error
+                    </div>
+                    <div class="solution">
+                        <strong>Troubleshooting:</strong>
+                        <ol>
+                            <li>Verify device compliance status in Intune</li>
+                            <li>Check device registration in Azure AD (Hybrid joined vs Azure AD joined)</li>
+                            <li>Confirm user is signed in with work account on the device</li>
+                            <li>Force device check-in/sync in Intune</li>
+                            <li>Check "Device State" claim in sign-in logs</li>
+                        </ol>
+                    </div>
+                    <div class="command-box">
+                        # Check device status
+Get-MgDevice -Filter "displayName eq 'DeviceName'" | Select DisplayName, IsCompliant, TrustType
+
+# Check user's devices
+Get-MgUserRegisteredDevice -UserId user@domain.com | Select DisplayName, IsCompliant
+                        <button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+                    </div>
+                </div>
+
+                <div class="issue">
+                    <h3>Legacy Authentication Blocking Issues</h3>
+                    <div class="symptoms">
+                        <strong>Symptoms:</strong> Outlook won't connect, mobile app failures, "Basic authentication" errors
+                    </div>
+                    <div class="solution">
+                        <strong>Solutions:</strong>
+                        <ol>
+                            <li>Identify which apps are using legacy auth via Sign-in Logs</li>
+                            <li>Update clients to modern authentication (Office 2016+ with Modern Auth enabled)</li>
+                            <li>Enable Modern Authentication on mailboxes</li>
+                            <li>Use App Passwords for apps that can't support Modern Auth</li>
+                            <li>Consider excluding specific users temporarily for migration</li>
+                        </ol>
+                    </div>
+                    <div class="command-box">
+                        # Check sign-ins using legacy authentication
+Get-MgAuditLogSignIn -Filter "clientAppUsed eq 'Exchange ActiveSync'" | Select UserDisplayName, ClientAppUsed, CreatedDateTime
+                        <button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sign-in Log Analysis -->
+        <div class="section" id="sign-in-logs">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>Sign-in Log Analysis</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="issue">
+                    <h3>Reading Sign-in Logs Effectively</h3>
+                    <div class="solution">
+                        <strong>Key Fields to Check:</strong>
+                        <ul>
+                            <li><strong>Status:</strong> Success, Failure, Interrupted</li>
+                            <li><strong>Conditional Access:</strong> Shows which policies applied and result</li>
+                            <li><strong>Authentication Details:</strong> MFA result, methods used</li>
+                            <li><strong>Device Information:</strong> OS, browser, compliant status</li>
+                            <li><strong>Location:</strong> IP address, country, city (if known)</li>
+                            <li><strong>Error Code:</strong> Specific failure reason</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="issue">
+                    <h3>Common Error Codes</h3>
+                    <div class="solution">
+                        <ul>
+                            <li><strong>50058:</strong> Silent sign-in request sent but user not signed in</li>
+                            <li><strong>50074:</strong> Strong authentication required (MFA needed)</li>
+                            <li><strong>50076:</strong> Strong authentication required (MFA challenge)</li>
+                            <li><strong>50105:</strong> User not assigned to a role for the application</li>
+                            <li><strong>50126:</strong> Invalid username or password</li>
+                            <li><strong>50132:</strong> Password expired</li>
+                            <li><strong>50140:</strong> Session interrupted (keep-me-signed-in issue)</li>
+                            <li><strong>53003:</strong> Access blocked by Conditional Access</li>
+                            <li><strong>65001:</strong> User or application lacks consent</li>
+                            <li><strong>70011:</strong> Invalid scope (permissions issue)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="issue">
+                    <h3>Filtering Sign-in Logs</h3>
+                    <div class="solution">
+                        <strong>Useful Filters:</strong>
+                        <ol>
+                            <li><strong>Failed sign-ins:</strong> Status = Failure</li>
+                            <li><strong>CA failures:</strong> Conditional Access = Failure</li>
+                            <li><strong>Specific user:</strong> User = user@domain.com</li>
+                            <li><strong>Specific app:</strong> Application = "Office 365"</li>
+                            <li><strong>Time range:</strong> Last 24 hours, 7 days, custom</li>
+                            <li><strong>Location:</strong> IP address or country filter</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PowerShell Commands -->
+        <div class="section" id="powershell">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>PowerShell Diagnostic Commands</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="issue">
+                    <h3>Connect to Required Modules</h3>
+                    <div class="command-box">
+                        # MSOnline (legacy but still useful for MFA)
+Connect-MsolService
+
+# Microsoft Graph (modern, preferred)
+Connect-MgGraph -Scopes "User.Read.All", "Policy.Read.All", "AuditLog.Read.All"
+
+# Azure AD Module (being deprecated)
+Connect-AzureAD
+                        <button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+                    </div>
+                </div>
+
+                <div class="issue">
+                    <h3>Check User MFA Status</h3>
+                    <div class="command-box">
+                        # Get MFA methods for specific user
+Get-MsolUser -UserPrincipalName user@domain.com | Select StrongAuthenticationMethods, StrongAuthenticationRequirements
+
+# Get all users and their MFA status
+Get-MsolUser -All | Select DisplayName, UserPrincipalName, @{N="MFA Status";E={if($_.StrongAuthenticationRequirements){$_.StrongAuthenticationRequirements.State}else{"Disabled"}}}
+
+# Export MFA status to CSV
+Get-MsolUser -All | Select DisplayName, UserPrincipalName, @{N="MFA Status";E={if($_.StrongAuthenticationRequirements){$_.StrongAuthenticationRequirements.State}else{"Disabled"}}} | Export-Csv -Path "C:\Temp\MFAStatus.csv" -NoTypeInformation
+                        <button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+                    </div>
+                </div>
+
+                <div class="issue">
+                    <h3>Reset MFA Registration</h3>
+                    <div class="command-box">
+                        # Reset MFA for single user
+Set-MsolUser -UserPrincipalName user@domain.com -StrongAuthenticationMethods @()
+
+# Force user to re-register on next sign-in
+$st = New-Object -TypeName Microsoft.Online.Administration.StrongAuthenticationRequirement
+$st.RelyingParty = "*"
+$st.State = "Enabled"
+Set-MsolUser -UserPrincipalName user@domain.com -StrongAuthenticationRequirements @($st)
+                        <button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+                    </div>
+                </div>
+
+                <div class="issue">
+                    <h3>List Conditional Access Policies</h3>
+                    <div class="command-box">
+                        # List all CA policies
+Get-MgIdentityConditionalAccessPolicy | Select DisplayName, State, CreatedDateTime
+
+# Get specific policy details
+Get-MgIdentityConditionalAccessPolicy -ConditionalAccessPolicyId "policy-id" | Format-List
+
+# Export all policies to JSON
+Get-MgIdentityConditionalAccessPolicy | ConvertTo-Json -Depth 10 | Out-File "C:\Temp\CAPolicies.json"
+                        <button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+                    </div>
+                </div>
+
+                <div class="issue">
+                    <h3>Query Sign-in Logs</h3>
+                    <div class="command-box">
+                        # Get recent failed sign-ins
+Get-MgAuditLogSignIn -Filter "status/errorCode ne 0" -Top 50 | Select UserPrincipalName, CreatedDateTime, Status, ClientAppUsed
+
+# Get sign-ins for specific user (last 7 days)
+$user = "user@domain.com"
+Get-MgAuditLogSignIn -Filter "userPrincipalName eq '$user'" -Top 100 | Select CreatedDateTime, Status, AppDisplayName, ConditionalAccessStatus
+
+# Get MFA-related sign-ins
+Get-MgAuditLogSignIn -Filter "authenticationRequirement eq 'multiFactorAuthentication'" -Top 50
+                        <button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+                    </div>
+                </div>
+
+                <div class="issue">
+                    <h3>Check Device Compliance</h3>
+                    <div class="command-box">
+                        # Get specific device details
+Get-MgDevice -Filter "displayName eq 'DeviceName'" | Select DisplayName, IsCompliant, TrustType, ApproximateLastSignInDateTime
+
+# Get all devices for a user
+Get-MgUserRegisteredDevice -UserId user@domain.com | Select DisplayName, IsCompliant, TrustType
+
+# Check non-compliant devices
+Get-MgDevice -Filter "isCompliant eq false" | Select DisplayName, OperatingSystem, ApproximateLastSignInDateTime
+                        <button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleSection(header) {
+            const content = header.nextElementSibling;
+            const allHeaders = document.querySelectorAll('.section-header');
+            const allContents = document.querySelectorAll('.section-content');
+            
+            // Close all sections
+            allHeaders.forEach(h => h.classList.remove('active'));
+            allContents.forEach(c => c.classList.remove('active'));
+            
+            // Open clicked section
+            header.classList.add('active');
+            content.classList.add('active');
+        }
+
+        function scrollToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            section.scrollIntoView({ behavior: 'smooth' });
+            
+            // Open the section
+            const header = section.querySelector('.section-header');
+            if (header) {
+                toggleSection(header);
+            }
+        }
+
+        function copyCommand(button) {
+            const commandBox = button.parentElement;
+            const text = commandBox.textContent.replace('Copy', '').trim();
+            
+            navigator.clipboard.writeText(text).then(() => {
+                button.textContent = 'Copied!';
+                button.classList.add('copied');
+                setTimeout(() => {
+                    button.textContent = 'Copy';
+                    button.classList.remove('copied');
+                }, 2000);
+            });
+        }
+
+        // Search functionality
+        document.getElementById('searchBox').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const issues = document.querySelectorAll('.issue');
+            
+            issues.forEach(issue => {
+                const text = issue.textContent.toLowerCase();
+                if (text.includes(searchTerm)) {
+                    issue.style.display = 'block';
+                    // Open parent section
+                    const section = issue.closest('.section-content');
+                    const header = section.previousElementSibling;
+                    section.classList.add('active');
+                    header.classList.add('active');
+                } else {
+                    issue.style.display = 'none';
+                }
+            });
+
+            // If search is empty, close all sections
+            if (searchTerm === '') {
+                document.querySelectorAll('.section-header').forEach(h => h.classList.remove('active'));
+                document.querySelectorAll('.section-content').forEach(c => c.classList.remove('active'));
+                issues.forEach(issue => issue.style.display = 'block');
+            }
+        });
+
+        // Open first section by default
+        document.addEventListener('DOMContentLoaded', function() {
+            const firstHeader = document.querySelector('.section-header');
+            if (firstHeader) {
+                toggleSection(firstHeader);
+            }
+        });
+    </script>
+</body>
+</html>
